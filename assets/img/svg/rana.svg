@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="57.338432mm"
+   height="46.172215mm"
+   viewBox="0 0 57.338432 46.172215"
+   version="1.1"
+   id="svg5"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false" />
+  <defs
+     id="defs2" />
+  <g
+     id="g16198"
+     inkscape:label="rana"
+     transform="matrix(1.2315466,0,0,1.2315466,-174.41513,-135.9004)"
+     inkscape:export-filename="rana.svg"
+     inkscape:export-xdpi="96"
+     inkscape:export-ydpi="96">
+    <ellipse
+       style="fill:#0fcb0f;fill-opacity:1;fill-rule:evenodd;stroke-width:0.264583"
+       id="path9504"
+       cx="165.39944"
+       cy="129.64752"
+       rx="19.947762"
+       ry="18.193098"
+       inkscape:label="cabeza" />
+    <ellipse
+       style="fill:#0fcb0f;fill-opacity:1;fill-rule:evenodd;stroke-width:0.111468"
+       id="path9504-61"
+       cx="150.02676"
+       cy="118.75241"
+       rx="8.4039183"
+       ry="7.6646848"
+       inkscape:label="ojo_2" />
+    <ellipse
+       style="fill:#0fcb0f;fill-opacity:1;fill-rule:evenodd;stroke-width:0.111468"
+       id="path9504-61-8"
+       cx="179.77699"
+       cy="118.01406"
+       rx="8.4039183"
+       ry="7.6646848"
+       inkscape:label="ojo_1" />
+    <ellipse
+       style="fill:#ff0000;fill-rule:evenodd;stroke-width:0.278388"
+       id="path13919"
+       cx="165.37186"
+       cy="138.18861"
+       rx="11.991126"
+       ry="5.7191825"
+       inkscape:label="boca" />
+    <ellipse
+       style="fill:#ffffff;fill-rule:evenodd;stroke-width:0.264583"
+       id="path16099"
+       cx="148.5242"
+       cy="117.66685"
+       rx="3.4169776"
+       ry="3.232276"
+       inkscape:label="ojo_fuera_2" />
+    <ellipse
+       style="fill:#ffffff;fill-rule:evenodd;stroke-width:0.264583"
+       id="path16099-2"
+       cx="181.23975"
+       cy="117.3898"
+       rx="3.4169776"
+       ry="3.232276"
+       inkscape:label="ojo_fuera_1" />
+    <ellipse
+       style="fill:#000000;fill-rule:evenodd;stroke-width:0.186569"
+       id="path16099-5-6"
+       cx="181.31523"
+       cy="117.53656"
+       rx="2.4094636"
+       ry="2.2792222"
+       inkscape:label="ojo_dentro_2" />
+    <ellipse
+       style="fill:#000000;fill-rule:evenodd;stroke-width:0.186569"
+       id="path16099-5-6-1"
+       cx="148.7576"
+       cy="117.92836"
+       rx="2.4094636"
+       ry="2.2792222"
+       inkscape:label="ojo_dentro_1" />
+  </g>
+</svg>
