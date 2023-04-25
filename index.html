@@ -34,10 +34,10 @@
         <link href="reproductor.css" rel="stylesheet">
 
         <!--JS-->
-        <script src="reproductor.js"></script>
+        <script src="assets/js/canvas.js"></script>
 
     </head>
-    <body>
+    <body onload="startGame()">
         <div class="col-lg-8 mx-auto p-3 py-md-5">
         <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
             <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
@@ -84,39 +84,36 @@
                         </div>
                     </nav> 
                     <section class="col-7">
-                       <audio id="audio" controls>
-                            <source src="assets/audio/rickroll.mp3" type="audio/mpeg">
-                            <source src="assets/music/rickroll.ogg" type="audio/ogg">
-                            Your browser does not support the audio element.
-                            <href src="assets/music/1.mp3"> Descargar Pista</href>
-
-                            <link href='https://fonts.googleapis.com/css?family=Roboto:100' rel='stylesheet' type='text/css'>
-                            <div class="player">
-                                <canvas></canvas>
-                                <div class="song">
-                                    <div class="artist">Kavinsky</div>
-                                    <div class="name">Odd Look ft. The Weeknd</div>
-                                </div>
-                                <div class="playarea">
-                                    <div class="prevSong"></div>
-                                    <div class="play"></div>
-                                    <div class="pause"></div>
-                                    <div class="nextSong"></div>
-                                </div>
-                                <div class="soundControl"></div>
-                                <div class="time">00:00</div>
+                        <div id="audio-player">
+                            <audio id="audio">
+                                <source src="asset/audio/rickroll.mp3" type="audio/mp3" id="source-mp3">
+                                <source src="asset/audio/rickroll.ogg" type="audio/ogg" id="source-ogg">
+                                <a href="audio1.mp3">Descargar audio1 en formato MP3</a>
+                                <a href="audio1.ogg">Descargar audio1 en formato OGG</a>
+                            </audio>
+                            <div id="controls">
+                                <button id="play-pause">Play</button>
+                                <button id="volume-up">Subir volumen</button>
+                                <button id="volume-down">Bajar volumen</button>
+                                <button id="mute">Mute</button>
+                                <button id="repeat">Repetir</button>
+                                <button id="skip-backward">Atrás 10 segundos</button>
+                                <button id="skip-forward">Adelante 10 segundos</button>
                             </div>
-                       </audio>
-                       <div class="icono">
-                            <i id="play_pause" onclick="play()" class="btn btn-primary bi bi-play-circle"></i>
-                       </div>
+                            <div id="info">
+                                <p id="title"></p>
+                                <p id="time"></p>
+                            </div>
+                        </div>
                     </section>
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde ipsa impedit sed voluptas in, maiores optio esse iusto explicabo soluta praesentium deleniti dolorum nisi rerum beatae accusamus dolor fugiat aut.</p>
+                        <canvas id="juego" width="900" height="600" style="background-color: blue; margin: 0 auto;"></canvas>
                     </div>
                 </div>  
+            </div>
+            <div>
             </div>
         </main>
         <footer class="pt-5 my-5 text-muted border-top">
@@ -125,33 +122,5 @@
         </div>
             <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>     
     </body>
-    <script>
-        var audio = document.getElementById("audio");
-        var play_pause = document.getElementById("play_pause");
-
-        function play(){
-            
-            audio.play(); 
-            play_pause.setAttribute("class", "bi bi-pause-circle btn btn-primary");
-            play_pause.setAttribute("onclick", "pause()");
-        }
-
-        function pause(){
-            audio.pause();
-            play_pause.setAttribute("class", "bi bi-play-circle btn btn-primary");
-            play_pause.setAttribute("onclick", "play()");
-        }
-
-        function cambiarPista1(){
-            source.src("assets/music/1.mp3");
-            audio.load();
-            audio.play();
-        }
-
-        function cambiarPista2(){
-            source.src("assets/music/2.mp3");
-            audio.load();
-            audio.play();
-        }   
-    </script>
+    <script src="assets/js/AudioPlayer.js"></script>
 </html>
