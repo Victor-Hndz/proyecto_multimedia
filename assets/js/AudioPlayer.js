@@ -3,27 +3,96 @@ const audio = document.getElementById('audio');
 const sourceMp3 = document.getElementById('source-mp3');
 const sourceOgg = document.getElementById('source-ogg');
 const playPauseButton = document.getElementById('play-pause');
-const volumeUpButton = document.getElementById('volume-up');
-const volumeDownButton = document.getElementById('volume-down');
 const muteButton = document.getElementById('mute');
 const repeatButton = document.getElementById('repeat');
 const skipBackwardButton = document.getElementById('skip-backward');
 const skipForwardButton = document.getElementById('skip-forward');
 const titleElement = document.getElementById('title');
 const timeElement = document.getElementById('time');
+const duration = document.getElementById('duration');
+const progressEl = document.getElementById('progress-bar');
+const volumeControl = document.getElementById('volume');
+const volumeDisplay = document.getElementById('volumeDisplay');
+const next = document.getElementById('next');
+const previous = document.getElementById('previous');
+let mouseDownOnSlider = false;
 
 // Establecer información de las pistas
-const tracks = [
+var tracks = [
     {
-        title: 'Pista 1',
+        title: 'Sunwave snippet',
+        autor: 'Independent Music Licensing Collective (IMLC)',
+        src: {
+            mp3: 'assets/audio/pista1.mp3',
+            ogg: 'assets/audio/pista1.ogg'
+        },
+        license: 'Creative Commons Attribution 4.0 International License',
+        url: 'https://freemusicarchive.org/music/independent-music-licensing-collective-imlc/jonas-hipper-snippets/sunwave-snippet/'
+    },
+
+    {
+        title: 'Our Values',
+        autor: 'Independent Music Licensing Collective (IMLC)',
+        src: {
+            mp3: 'assets/audio/pista2.mp3',
+            ogg: 'assets/audio/pista2.ogg'
+        },
+        license: 'Creative Commons Attribution 4.0 International License'
+    },
+
+    {
+        title: 'Fall and Rise',
+        autor: 'Independent Music Licensing Collective (IMLC)',
+        src: {
+            mp3: 'assets/audio/pista3.mp3',
+            ogg: 'assets/audio/pista3.ogg'
+        },
+        license: 'Creative Commons Attribution 4.0 International License'
+    }
+];
+
+const hiddenTrack = [
+    {
+        title: 'Rickroll',
+        autor: 'Rick Astley',
         src: {
             mp3: 'assets/audio/rickroll.mp3',
             ogg: 'assets/audio/rickroll.ogg'
         },
         license: 'Creative Commons Attribution 4.0 International License',
-        url: 'https://www.example.com/audio1'
     }
 ];
+
+volumeControl.addEventListener('input', () => {
+    audio.volume = volumeControl.value;
+    volumeDisplay.textContent = `${Math.floor(audio.volume * 100)}%`;
+});
+
+audio.addEventListener("loadeddata", () => {
+    progressEl.value = 0;
+});
+audio.addEventListener("timeupdate", () => {
+    if (!mouseDownOnSlider) {
+        progressEl.value = audio.currentTime / audio.duration * 100;
+    }
+});
+progressEl.addEventListener("change", () => {
+    const pct = progressEl.value / 100;
+    audio.currentTime = (audio.duration || 0) * pct;
+});
+progressEl.addEventListener("mousedown", () => {
+    mouseDownOnSlider = true;
+});
+progressEl.addEventListener("mouseup", () => {
+    mouseDownOnSlider = false;
+});
+
+// Actualizar la duración de la pista cuando se cargue
+audio.addEventListener('loadedmetadata', () => {
+    const durationInMinutes = Math.floor(audio.duration / 60);
+    const durationInSeconds = Math.floor(audio.duration % 60);
+    duration.textContent = `${durationInMinutes}:${durationInSeconds < 10 ? '0' + durationInSeconds : durationInSeconds}`;
+});
 
 // Inicializar el reproductor
 let currentTrackIndex = 0;
@@ -61,6 +130,8 @@ function adjustVolume(change) {
     } else {
         audio.volume = newVolume;
     }
+    volumeDisplay.textContent = `${Math.floor(audio.volume * 100)}%`;
+    volumeControl.value = audio.volume;
 }
 
 // Función para silenciar el sonido
@@ -98,21 +169,51 @@ function skipTime(seconds) {
 // Función para cambiar de pista
 function changeTrack() {
     currentTrackIndex = Math.floor(Math.random() * tracks.length);
-    audio.src = tracks[currentTrackIndex].src.mp3;
-    titleElement.textContent = tracks[currentTrackIndex].title;
+    selectTrack(currentTrackIndex);
+}
+
+function selectTrack(index)
+{
+    audio.src = tracks[index].src.mp3;
+    titleElement.textContent = tracks[index].title;
     timeElement.textContent = '0:00';
     audio.play();
-    playPauseButton.textContent = 'Pause';
+    playPauseButton.textContent = 'Pause';  
 }
+
+function nextTrack(){
+    currentTrackIndex = currentTrackIndex + 1;
+    if(currentTrackIndex > tracks.length - 1){
+        currentTrackIndex = 0;
+    }
+    selectTrack(currentTrackIndex);
+}
+
+function previousTrack(){
+    currentTrackIndex = currentTrackIndex - 1;
+    if(currentTrackIndex < 0){
+        currentTrackIndex = tracks.length - 1;
+    }
+    selectTrack(currentTrackIndex);
+}
+
+function cargarCanciones(){
+    var lista = document.getElementById("listaCanciones");
+    lista.innerHTML = "";
+    tracks.forEach(track => {
+        lista.innerHTML += "<div class='row' onclick='selectTrack(" + tracks.indexOf(track) + ")'> <div class='col-5'><img/><div class='col-7'><h3>" + track.title + "</h3><h4>" + track.autor + "</h4></div></div><div class='col-3'><p>" + track.duration + "</p></div></div>";
+    });
+}
+
 
 // Asignar eventos a los botones
 playPauseButton.addEventListener('click', togglePlayPause);
-volumeUpButton.addEventListener('click', () => adjustVolume(0.1));
-volumeDownButton.addEventListener('click', () => adjustVolume(-0.1));
 muteButton.addEventListener('click', toggleMute);
 repeatButton.addEventListener('click', toggleRepeat);
 skipBackwardButton.addEventListener('click', () => skipTime(-10));
 skipForwardButton.addEventListener('click', () => skipTime(10));
 audio.addEventListener('timeupdate', updateTime);
 audio.addEventListener('ended', changeTrack);
-
+next.addEventListener('click', nextTrack);
+previous.addEventListener('click', previousTrack);
+window.addEventListener("load", cargarCanciones);

@@ -50,37 +50,7 @@
             <div class="container">
                 <div class="row">
                     <nav class="col-lg-5">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-5">
-                                    <h3>Aqui va una imagen</h3>
-                                </div>
-                                <div class="col-7">
-                                    <h2>Titulo pista 1</h2>
-                                    <h4>Autor pista 1</h4>
-                                    <p>Duración pista 1</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-5">
-                                    <h3>Aqui va una imagen</h3>
-                                </div>
-                                <div class="col-7">
-                                    <h2>Titulo pista 2</h2>
-                                    <h4>Autor pista 2</h4>
-                                    <p>Duración pista 2</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-5">
-                                    <h3>Aqui va una imagen</h3>
-                                </div>
-                                <div class="col-7">
-                                    <h2>Titulo pista 3</h2>
-                                    <h4>Autor pista 3</h4>
-                                    <p>Duración pista 3</p>
-                                </div>
-                            </div>
+                        <div class="container" id="listaCanciones" onload="return cargarCanciones()">
                         </div>
                     </nav> 
                     <section class="col-7">
@@ -92,17 +62,33 @@
                                 <a href="audio1.ogg">Descargar audio1 en formato OGG</a>
                             </audio>
                             <div id="controls">
-                                <button id="play-pause">Play</button>
-                                <button id="volume-up">Subir volumen</button>
-                                <button id="volume-down">Bajar volumen</button>
-                                <button id="mute">Mute</button>
-                                <button id="repeat">Repetir</button>
-                                <button id="skip-backward">Atrás 10 segundos</button>
-                                <button id="skip-forward">Adelante 10 segundos</button>
-                            </div>
-                            <div id="info">
-                                <p id="title"></p>
-                                <p id="time"></p>
+                                <div id="superior">
+                                    <div id="info">
+                                        <p id="title"> Titulo</p>
+                                        <p id="artist"> Artista </p>
+                                    </div>
+                                    <div id="volume_vertical">
+                                        <button id="mute">Mute</button>
+                                        <input type="range" id="volume" min="0" max="1" step="0.1" value="1">
+                                        <div id="volumeDisplay">100%</div>
+                                    </div>
+                                </div>
+                                <div id="progress">
+                                    <button id="skip-backward">Atrás 10 segundos</button>
+                                    <div id="progress-bar-container">
+                                        <input type="range" id="progress-bar" min="0" max="100" step="1" value="0">
+                                        <div id="time">0:00</div>
+                                        <div id="duration">0:00</div>
+                                    </div>
+                                    <button id="skip-forward">Adelante 10 segundos</button>
+                                </div>
+                                <div id="inferior">
+                                    <button id="shuffle">Aleatorio</button>
+                                    <button id="previous">Anterior</button>
+                                    <button id="play-pause">Play</button>
+                                    <button id="next">Siguiente</button>
+                                    <button id="repeat">Repetir</button>
+                                </div>   
                             </div>
                         </div>
                     </section>
@@ -119,8 +105,7 @@
         <footer class="pt-5 my-5 text-muted border-top">
             Created by the Bootstrap team &middot; &copy; 2021
         </footer>
-        </div>
-            <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>     
+        <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>     
     </body>
     <script src="assets/js/AudioPlayer.js"></script>
 </html>

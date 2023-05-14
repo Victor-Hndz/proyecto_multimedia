@@ -57,6 +57,16 @@ class Artifact {
     draw() {
         myGame.context.drawImage(this.sprite, this.x, this.y, this.width, this.height);
     }
+
+    move()
+    {
+        if(this.x < 0 - this.width)
+        {
+            this.x = myGame.canvas.clientWidth + this.width;
+        }
+
+        this.x -= 1.5;
+    }
 }
 class Player {
     constructor(x, y, width, height) {
@@ -105,7 +115,6 @@ var myGame = {
         this.artifacts = [];
         this.artifacts.push(new Artifact(100, 100, 25, 25));
         this.artifacts.push(new Artifact(200, 200, 25, 25));
-        this.artifacts.push(new Artifact(300, 300, 25, 25));
         this.artifacts.push(new Artifact(400, 400, 25, 25));    
     },
     clear: function() {
@@ -120,13 +129,16 @@ function updateGame() {
     
     myGame.clear();
     if(myGame.artifacts.length == 0) {
-        alert("You win!");
+        tracks = tracks.concat(hiddenTrack);
+        cargarCanciones();
+        myGame.clear();
         clearInterval(myGame.interval);
     }
     myGame.player.move();
     myGame.player.draw();
 
     myGame.artifacts.forEach(artifact => {
+        artifact.move();
         artifact.draw();
     });
 
@@ -140,10 +152,12 @@ function updateGame() {
             artifact.x + artifact.width > myGame.player.x &&
             artifact.y < myGame.player.y + myGame.player.height &&
             artifact.y + artifact.height > myGame.player.y) {
-                myGame.artifacts.splice(myGame.artifacts.indexOf(artifact), 1);
+                //selectTrack(myGame.artifacts.indexOf(artifact));
+                index = myGame.artifacts.indexOf(artifact);
+                myGame.artifacts.splice(index, 1);
+                selectTrack(index);
         }
     });
-
     
 }
 
