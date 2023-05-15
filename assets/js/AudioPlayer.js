@@ -8,6 +8,7 @@ const repeatButton = document.getElementById('repeat');
 const skipBackwardButton = document.getElementById('skip-backward');
 const skipForwardButton = document.getElementById('skip-forward');
 const titleElement = document.getElementById('title');
+const autorElement = document.getElementById('artist');
 const timeElement = document.getElementById('time');
 const duration = document.getElementById('duration');
 const progressEl = document.getElementById('progress-bar');
@@ -15,7 +16,10 @@ const volumeControl = document.getElementById('volume');
 const volumeDisplay = document.getElementById('volumeDisplay');
 const next = document.getElementById('next');
 const previous = document.getElementById('previous');
+const shuffle = document.getElementById('shuffle');
+const progressVar = document.querySelectorAll('input[type="range"].slider-progress');
 let mouseDownOnSlider = false;
+let isShuffle = false;
 
 // Establecer información de las pistas
 var tracks = [
@@ -65,7 +69,7 @@ const hiddenTrack = [
 
 volumeControl.addEventListener('input', () => {
     audio.volume = volumeControl.value;
-    volumeDisplay.textContent = `${Math.floor(audio.volume * 100)}%`;
+    volumeDisplay.textContent = `${Math.floor(audio.volume * 100)}`;
 });
 
 audio.addEventListener("loadeddata", () => {
@@ -74,6 +78,8 @@ audio.addEventListener("loadeddata", () => {
 audio.addEventListener("timeupdate", () => {
     if (!mouseDownOnSlider) {
         progressEl.value = audio.currentTime / audio.duration * 100;
+        //Pintamos la barra de progreso
+        progressEl.style.setProperty('--value', progressEl.value);
     }
 });
 progressEl.addEventListener("change", () => {
@@ -100,6 +106,7 @@ sourceMp3.src = tracks[currentTrackIndex].src.mp3;
 sourceOgg.src = tracks[currentTrackIndex].src.ogg;
 audio.load();
 titleElement.textContent = tracks[currentTrackIndex].title;
+autorElement.textContent = tracks[currentTrackIndex].autor;
 
 // Función para actualizar el tiempo de la pista
 function updateTime() {
@@ -113,10 +120,10 @@ function updateTime() {
 function togglePlayPause() {
     if (audio.paused) {
         audio.play();
-        playPauseButton.textContent = 'Pause';
+        playPauseButton.innerHTML = '<i id="play-pause" class="bi bi-pause-circle-fill icono"></i>';
     } else {
         audio.pause();
-        playPauseButton.textContent = 'Play';
+        playPauseButton.innerHTML = '<i id="play-pause" class="bi bi-play-circle-fill icono"></i>';
     }
 }
 
@@ -130,7 +137,7 @@ function adjustVolume(change) {
     } else {
         audio.volume = newVolume;
     }
-    volumeDisplay.textContent = `${Math.floor(audio.volume * 100)}%`;
+    volumeDisplay.textContent = `${Math.floor(audio.volume * 100)}`;
     volumeControl.value = audio.volume;
 }
 
@@ -138,9 +145,21 @@ function adjustVolume(change) {
 function toggleMute() {
     audio.muted = !audio.muted;
     if (audio.muted) {
-        muteButton.textContent = 'Unmute';
+        muteButton.innerHTML = '<i id="mute" class="bi bi-volume-mute-fill icono"></i>';
+        volumeDisplay.textContent = '0';
     } else {
-        muteButton.textContent = 'Mute';
+        muteButton.innerHTML = '<i id="mute" class="bi bi-volume-down-fill icono"></i>';
+        volumeDisplay.textContent = `${Math.floor(audio.volume * 100)}`;
+    }
+}
+
+//Función para el modo aleatorio
+function toggleShuffle() {
+    isShuffle = !isShuffle;
+    if (isShuffle) {
+        shuffle.style.color = "#b2b2b2";
+    } else {
+        shuffle.style.color = 'black';
     }
 }
 
@@ -148,9 +167,9 @@ function toggleMute() {
 function toggleRepeat() {
     audio.loop = !audio.loop;
     if (audio.loop) {
-        repeatButton.style.backgroundColor = 'green';
+        repeatButton.style.color = "#b2b2b2";
     } else {
-        repeatButton.style.backgroundColor = 'transparent';
+        repeatButton.style.color = 'black';
     }
 }
 
@@ -166,38 +185,56 @@ function skipTime(seconds) {
     }
 }
 
-// Función para cambiar de pista
+// Función para cambiar de pista aleatoriamente
 function changeTrack() {
     currentTrackIndex = Math.floor(Math.random() * tracks.length);
     selectTrack(currentTrackIndex);
 }
 
-function selectTrack(index)
-{
+function selectTrack(index) {
     audio.src = tracks[index].src.mp3;
     titleElement.textContent = tracks[index].title;
+    autorElement.textContent = tracks[index].autor;
     timeElement.textContent = '0:00';
     audio.play();
-    playPauseButton.textContent = 'Pause';  
+    playPauseButton.innerHTML = '<i id="play-pause" class="bi bi-pause-circle-fill icono"></i>';
 }
 
-function nextTrack(){
-    currentTrackIndex = currentTrackIndex + 1;
-    if(currentTrackIndex > tracks.length - 1){
-        currentTrackIndex = 0;
+function nextTrack() {
+    if (!audio.loop) {
+        if (!isShuffle) {
+            currentTrackIndex = currentTrackIndex + 1;
+            if (currentTrackIndex > tracks.length - 1) {
+                currentTrackIndex = 0;
+            }
+            selectTrack(currentTrackIndex);
+        } else {
+            changeTrack();
+        }
+    } else {
+        audio.currentTime = 0;
     }
-    selectTrack(currentTrackIndex);
 }
 
-function previousTrack(){
-    currentTrackIndex = currentTrackIndex - 1;
-    if(currentTrackIndex < 0){
-        currentTrackIndex = tracks.length - 1;
+function previousTrack() {
+    if (audio.currentTime > 3) {
+        audio.currentTime = 0;
+    } else if (!audio.loop) {
+        if (isShuffle) {
+            currentTrackIndex = currentTrackIndex - 1;
+            if (currentTrackIndex < 0) {
+                currentTrackIndex = tracks.length - 1;
+            }
+            selectTrack(currentTrackIndex);
+        } else {
+            changeTrack();
+        }
+    } else {
+        audio.currentTime = 0;
     }
-    selectTrack(currentTrackIndex);
 }
 
-function cargarCanciones(){
+function cargarCanciones() {
     var lista = document.getElementById("listaCanciones");
     lista.innerHTML = "";
     tracks.forEach(track => {
@@ -209,11 +246,26 @@ function cargarCanciones(){
 // Asignar eventos a los botones
 playPauseButton.addEventListener('click', togglePlayPause);
 muteButton.addEventListener('click', toggleMute);
+shuffle.addEventListener('click', toggleShuffle);
 repeatButton.addEventListener('click', toggleRepeat);
 skipBackwardButton.addEventListener('click', () => skipTime(-10));
 skipForwardButton.addEventListener('click', () => skipTime(10));
 audio.addEventListener('timeupdate', updateTime);
-audio.addEventListener('ended', changeTrack);
+audio.addEventListener('ended', nextTrack);
 next.addEventListener('click', nextTrack);
 previous.addEventListener('click', previousTrack);
 window.addEventListener("load", cargarCanciones);
+
+for (let e of document.querySelectorAll('input[type="range"].slider-progress')) {
+    e.style.setProperty('--value', e.value);
+    e.style.setProperty('--min', e.min == '' ? '0' : e.min);
+    e.style.setProperty('--max', e.max == '' ? '100' : e.max);
+    e.addEventListener('input', () => e.style.setProperty('--value', e.value));
+}
+
+for (let e of document.querySelectorAll('input[type="range"].slider-progress2')) {
+    e.style.setProperty('--value', e.value);
+    e.style.setProperty('--min', e.min == '' ? '0' : e.min);
+    e.style.setProperty('--max', e.max == '' ? '100' : e.max);
+    e.addEventListener('input', () => e.style.setProperty('--value', e.value));
+}
