@@ -116,6 +116,7 @@ button{
 /* Slider */
 input[type=range].styled-slider {
     height: 2.2em;
+    appearance: none;
     -webkit-appearance: none;
   }
   
@@ -283,6 +284,7 @@ input[type=range].styled-slider {
 /* Slider 2 */
 input[type=range].styled-slider2 {
     height: 1em;
+    appearance: none;
     -webkit-appearance: none;
     transform: rotate(270deg);
   }
@@ -450,5 +452,45 @@ input[type=range].styled-slider2 {
     border: 1px solid #b2b2b2;
     border-right-width: 0;
   }
-  
 
+  .lista_canciones{
+    margin: 10px 0;
+  }
+
+  .lista_canciones .container-lista{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    background-color: #fff;
+  }
+
+  .lista_canciones img{
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+
+  .lista_canciones h3{
+    font-size: 1.3em;
+    font-weight: 600;
+    margin-bottom: 0;
+  }
+
+  .lista_canciones h4{
+    font-size: 1em;
+    font-weight: 400;
+    margin-bottom: 0;
+  }
+
+  .lista_canciones p{
+    font-size: 1em;
+    font-weight: 300;
+    margin-bottom: 0;
+  }
+
+  .center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }

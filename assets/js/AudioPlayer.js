@@ -31,6 +31,8 @@ var tracks = [
             ogg: 'assets/audio/pista1.ogg'
         },
         license: 'Creative Commons Attribution 4.0 International License',
+        portada: 'assets/img/pista1.jpg',
+        duration: '00:33',
         url: 'https://freemusicarchive.org/music/independent-music-licensing-collective-imlc/jonas-hipper-snippets/sunwave-snippet/'
     },
 
@@ -41,7 +43,9 @@ var tracks = [
             mp3: 'assets/audio/pista2.mp3',
             ogg: 'assets/audio/pista2.ogg'
         },
-        license: 'Creative Commons Attribution 4.0 International License'
+        license: 'Creative Commons Attribution 4.0 International License',
+        portada: 'assets/img/pista2.jpg',
+        duration: '02:30'
     },
 
     {
@@ -51,7 +55,9 @@ var tracks = [
             mp3: 'assets/audio/pista3.mp3',
             ogg: 'assets/audio/pista3.ogg'
         },
-        license: 'Creative Commons Attribution 4.0 International License'
+        license: 'Creative Commons Attribution 4.0 International License',
+        portada: 'assets/img/pista3.jpg',
+        duration: '03:28'
     }
 ];
 
@@ -64,6 +70,8 @@ const hiddenTrack = [
             ogg: 'assets/audio/rickroll.ogg'
         },
         license: 'Creative Commons Attribution 4.0 International License',
+        portada: 'assets/img/rick-roll.jpg',
+        duration: '03:32'
     }
 ];
 
@@ -75,6 +83,7 @@ volumeControl.addEventListener('input', () => {
 audio.addEventListener("loadeddata", () => {
     progressEl.value = 0;
 });
+
 audio.addEventListener("timeupdate", () => {
     if (!mouseDownOnSlider) {
         progressEl.value = audio.currentTime / audio.duration * 100;
@@ -127,7 +136,7 @@ function togglePlayPause() {
     }
 }
 
-// Función para ajustar el volumen
+// Función para ajustar el volumenz
 function adjustVolume(change) {
     const newVolume = audio.volume + change;
     if (newVolume < 0) {
@@ -238,7 +247,7 @@ function cargarCanciones() {
     var lista = document.getElementById("listaCanciones");
     lista.innerHTML = "";
     tracks.forEach(track => {
-        lista.innerHTML += "<div class='row' onclick='selectTrack(" + tracks.indexOf(track) + ")'> <div class='col-5'><img/><div class='col-7'><h3>" + track.title + "</h3><h4>" + track.autor + "</h4></div></div><div class='col-3'><p>" + track.duration + "</p></div></div>";
+        lista.innerHTML += "<div class='row lista_canciones' onclick='selectTrack(" + tracks.indexOf(track) + ")'> <div class='container-lista'><img src="+ track.portada +" alt="+track.title+"/><div><h3>" + track.title + "</h3><h4>" + track.autor + "</h4><p>" + track.duration + "</p></div></div></div>";
     });
 }
 
