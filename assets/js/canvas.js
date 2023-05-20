@@ -43,7 +43,8 @@ document.addEventListener("keyup", function (event) {
 });
 
 class Artifact {
-    constructor(x, y, width, height) {
+    constructor(id, x, y, width, height) {
+        this.id = id;
         this.x = x;
         this.y = y;
         this.width = width;
@@ -103,15 +104,16 @@ class Player {
 
 var myGame = {
     start: function () {
+        myGame.is_over = false;
         this.canvas = document.getElementById("juego");
         this.FrameNo = 0;
         this.player = new Player(this.canvas.width / 2 - 25, this.canvas.height / 2 - 25, 50, 50);
         this.context = this.canvas.getContext("2d");
         this.interval = setInterval(updateGame, 5);
         this.artifacts = [];
-        this.artifacts.push(new Artifact(100, 100, 25, 25));
-        this.artifacts.push(new Artifact(200, 200, 25, 25));
-        this.artifacts.push(new Artifact(400, 400, 25, 25));
+        this.artifacts.push(new Artifact(0,100, 100, 25, 25));
+        this.artifacts.push(new Artifact(1, 200, 200, 25, 25));
+        this.artifacts.push(new Artifact(2, 400, 400, 25, 25));
     },
     clear: function () {
         this.context.clearRect(0, 0, this.canvas.clientWidth, this.canvas.clientHeight);
@@ -124,12 +126,10 @@ function startGame() {
 function updateGame() {
 
     myGame.clear();
-    if (myGame.artifacts.length == 0) {
+    if (myGame.artifacts.length == 0 && myGame.is_over == false) {
         tracks = tracks.concat(hiddenTrack);
         cargarCanciones();
-        selectTrack(3);
-        myGame.clear();
-        clearInterval(myGame.interval);
+        myGame.is_over = true;
     }
     myGame.player.move();
     myGame.player.draw();
@@ -139,20 +139,14 @@ function updateGame() {
         artifact.draw();
     });
 
-    //Comprobar si se puede mover
-
-    //mover
-
-    //Chequear colisiones
     myGame.artifacts.forEach(artifact => {
         if (artifact.x < myGame.player.x + myGame.player.width &&
             artifact.x + artifact.width > myGame.player.x &&
             artifact.y < myGame.player.y + myGame.player.height &&
             artifact.y + artifact.height > myGame.player.y) {
-            //selectTrack(myGame.artifacts.indexOf(artifact));
-            index = myGame.artifacts.indexOf(artifact);
+            var index = myGame.artifacts.indexOf(artifact);
             myGame.artifacts.splice(index, 1);
-            selectTrack(index);
+            selectTrack(artifact.id);
         }
     });
 
