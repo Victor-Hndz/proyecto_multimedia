@@ -305,12 +305,9 @@ function orejas(x_izq, y, x_der) {
  * @param {*} w 
  * @param {*} h 
  */
-function brazos(x_izq, y_izq, separacion, w, h) {
+function brazos(x_izq, y_izq, x_der, y_der, w, h) {
     var w_izq = w;
     var h_izq = h;
-
-    var x_der = x_izq+separacion;
-    var y_der = y_izq;
     var w_der = w_izq;
     var h_der = h_izq;
 
@@ -359,5 +356,5 @@ function estado_inicial() {
     piernas(150, 220, 20, 70, 230);
     cuerpo(200, 175, 80);
     cabeza(150, 50, 250, 150);
-    brazos(120, 150, 140, 20, 70);
+    brazos(120, 150, 260, 150, 20, 70);
 }
