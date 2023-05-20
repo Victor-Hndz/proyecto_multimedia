@@ -1,0 +1,17 @@
+#video_buttons {
+
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: wrap-content;
+}
+
+#video_buttons #volume_vertical {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+}
