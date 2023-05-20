@@ -15,346 +15,574 @@ const corbata_color = "red";
 const circulo = Math.PI * 2;
 const borde_size = 1;
 
+//Ratón
+class Raton {
+    /**
+     * 
+     * @param {cabeza} cabeza 
+     * @param {cuerpo} cuerpo 
+     * @param {brazo} brazo_izq 
+     * @param {brazo} brazo_der 
+     * @param {pierna} pierna_izq 
+     * @param {pierna} pierna_der 
+     * @param {gafas} gafas 
+     * @param {int} x centro del cuerpo del ratón
+     * @param {int} y centro del cuerpo del ratón
+     * @param {int} w anchura máximo del ratón
+     * @param {int} h altura máxima del ratón
+     */
+    constructor(cabeza, cuerpo, brazo_izq, brazo_der, pierna_izq, pierna_der, gafas, x, y, w, h) {
+        this.cabeza = cabeza;
+        this.cuerpo = cuerpo;
+        this.brazo_izq = brazo_izq;
+        this.brazo_der = brazo_der;
+        this.pierna_izq = pierna_izq;
+        this.pierna_der = pierna_der;
+        this.gafas = gafas;
+
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+
+        dibujar(x, y, w, h);
+    }
+
+    dibujar(x, y, w, h) {
+        this.pierna_izq.dibujar(x, y, w, h);
+        this.pierna_der.dibujar(x, y, w, h);
+        this.cuerpo.dibujar(x, y, w, h);
+        this.brazo_izq.dibujar(x, y, w, h);
+        this.brazo_der.dibujar(x, y, w, h);
+        this.cabeza.dibujar(x, y, w, h);
+        this.gafas.dibujar(x, y, w, h);
+    }
+
+    mover(x, y) {
+        this.cabeza.mover(x, y);
+        this.cuerpo.mover(x, y);
+        this.brazo_izq.mover(x, y);
+        this.brazo_der.mover(x, y);
+        this.pierna_izq.mover(x, y);
+        this.pierna_der.mover(x, y);
+        this.gafas.mover(x, y);
+    }
+
+    rotar(x, y, angulo) {
+        this.cabeza.rotar(x, y, angulo);
+        this.cuerpo.rotar(x, y, angulo);
+        this.brazo_izq.rotar(x, y, angulo);
+        this.brazo_der.rotar(x, y, angulo);
+        this.pierna_izq.rotar(x, y, angulo);
+        this.pierna_der.rotar(x, y, angulo);
+        this.gafas.rotar(x, y, angulo);
+    }
+
+    //Getters
+    get getCabeza() {
+        return this.cabeza;
+    }
+
+    get getCuerpo() {
+        return this.cuerpo;
+    }
+
+    get getBrazoIzq() {
+        return this.brazo_izq;
+    }
+
+    get getBrazoDer() {
+        return this.brazo_der;
+    }
+
+    get getPiernaIzq() {
+        return this.pierna_izq;
+    }
+
+    get getPiernaDer() {
+        return this.pierna_der;
+    }
+
+    get getGafas() {
+        return this.gafas;
+    }
+
+    get getX() {
+        return this.x;
+    }
+
+    get getY() {
+        return this.y;
+    }
+
+    get getW() {
+        return this.w;
+    }
+
+    get getH() {
+        return this.h;
+    }
+
+    //Setters
+    set setCabeza(cabeza) {
+        this.cabeza = cabeza;
+        dibujar(this.x, this.y, this.w, this.h);
+    }
+
+    set setCuerpo(cuerpo) {
+        this.cuerpo = cuerpo;
+        dibujar(this.x, this.y, this.w, this.h);
+    }
+
+    set setBrazoIzq(brazo_izq) {
+        this.brazo_izq = brazo_izq;
+        dibujar(this.x, this.y, this.w, this.h);
+    }
+
+    set setBrazoDer(brazo_der) {
+        this.brazo_der = brazo_der;
+        dibujar(this.x, this.y, this.w, this.h);
+    }
+
+    set setPiernaIzq(pierna_izq) {
+        this.pierna_izq = pierna_izq;
+        dibujar(this.x, this.y, this.w, this.h);
+    }
+
+    set setPiernaDer(pierna_der) {
+        this.pierna_der = pierna_der;
+        dibujar(this.x, this.y, this.w, this.h);
+    }
+
+    set setGafas(gafas) {
+        this.gafas = gafas;
+        dibujar(this.x, this.y, this.w, this.h);
+    }
+
+    set setX(x) {
+        this.x = x;
+        dibujar(this.x, this.y, this.w, this.h);
+    }
+
+    set setY(y) {
+        this.y = y;
+        dibujar(this.x, this.y, this.w, this.h);
+    }
+
+    set setW(w) {
+        this.w = w;
+        dibujar(this.x, this.y, this.w, this.h);
+    }
+
+    set setH(h) {
+        this.h = h;
+        dibujar(this.x, this.y, this.w, this.h);
+    }
+}
+class Cabeza {
+    constructor(ojo_izq, ojo_der, oreja_izq, oreja_der, nariz, x, y, w, h1, h2) {
+        this.ojo_izq = ojo_izq;
+        this.ojo_der = ojo_der;
+        this.oreja_izq = oreja_izq;
+        this.oreja_der = oreja_der;
+        this.nariz = nariz;
+
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h1 = h1;
+        this.h2 = h2;
+
+        this.dibujar();
+    }
+
+    dibujar() {
+        console.log(this.x, this.y, this.w, this.h1, this.h2);
+        //Cabeza
+        context.strokeStyle = borde_color;
+        context.lineWidth = borde_size; // Ancho del borde
+        context.beginPath();
+        context.moveTo(this.x, this.y + this.h2);
+        context.lineTo(this.x - (this.w / 2), this.y - this.h1);
+        context.lineTo(this.x + (this.w / 2), this.y - this.h1);
+        context.closePath();
+        context.fillStyle = pelo_color;
+        context.fill();
+        context.stroke();
+        
+        // this.ojo_izq.dibujar();
+        // this.ojo_der.dibujar();
+
+        // this.oreja_izq.dibujar();
+        // this.oreja_der.dibujar();
+
+        // this.nariz.dibujar();
+    }
+
+    mover(x, y) {
+        this.borrar();
+        
+        this.ojo_izq.mover(x, y);
+        this.ojo_der.mover(x, y);
+        this.oreja_izq.mover(x, y);
+        this.oreja_der.mover(x, y);
+        this.nariz.mover(x, y);
+        
+        this.x = x;
+        this.y = y;
+        this.dibujar();
+    }
+
+    borrar() {
+        context.clearRect(this.x - (this.w / 2) -borde_size, this.y - this.h1 -borde_size, this.w + 2*borde_size, this.h1 + this.h2 + 2*borde_size);
+    }
+}
+
+
 document.addEventListener("onload", estado_inicial());
 
-// Dibujar las piernas del ratón
-/**
- * 
- * @param {*} x_izq 
- * @param {*} y_izq 
- * @param {*} w_izq 
- * @param {*} h_izq 
- * @param {*} x_der 
- */
-function piernas(x_izq, y_izq, w_izq, h_izq, x_der) {
-    var y_der = y_izq;
-    var w_der = w_izq;
-    var h_der = h_izq;
+// // Dibujar las piernas del ratón
+// /**
+//  * 
+//  * @param {*} x_izq 
+//  * @param {*} y_izq 
+//  * @param {*} w_izq 
+//  * @param {*} h_izq 
+//  * @param {*} x_der 
+//  */
+// function piernas(x_izq, y_izq, w_izq, h_izq, x_der) {
+//     var y_der = y_izq;
+//     var w_der = w_izq;
+//     var h_der = h_izq;
 
-    //piernas
-    context.fillStyle = pantalon_color;
-    context.fillRect(x_izq, y_izq, w_izq, h_izq);
-    context.fillRect(x_der, y_der, w_der, h_der);
+//     //piernas
+//     context.fillStyle = pantalon_color;
+//     context.fillRect(x_izq, y_izq, w_izq, h_izq);
+//     context.fillRect(x_der, y_der, w_der, h_der);
 
-    pies(x_izq, y_izq+h_izq, x_der, y_der+h_der);
-}
+//     pies(x_izq, y_izq+h_izq, x_der, y_der+h_der);
+// }
 
-// Dibujar los pies del ratón
-/**
- * 
- * @param {*} x_izq 
- * @param {*} y_izq 
- * @param {*} x_der 
- * @param {*} y_der 
- */
-function pies(x_izq, y_izq, x_der, y_der) {
-    var w_izq = 40;
-    var h_izq = 20;
+// // Dibujar los pies del ratón
+// /**
+//  * 
+//  * @param {*} x_izq 
+//  * @param {*} y_izq 
+//  * @param {*} x_der 
+//  * @param {*} y_der 
+//  */
+// function pies(x_izq, y_izq, x_der, y_der) {
+//     var w_izq = 40;
+//     var h_izq = 20;
 
-    var w_der = w_izq;
-    var h_der = h_izq;
+//     var w_der = w_izq;
+//     var h_der = h_izq;
 
-    var radio = 10;
+//     var radio = 10;
 
-    context.fillStyle = pelo_oscuro_color
-    context.fillRect(x_izq, y_izq, w_izq, h_izq);
-    context.fillRect(x_der, y_der, w_der, h_der);
+//     context.fillStyle = pelo_oscuro_color
+//     context.fillRect(x_izq, y_izq, w_izq, h_izq);
+//     context.fillRect(x_der, y_der, w_der, h_der);
      
-    context.fillStyle = pelo_oscuro_color;
-    context.beginPath();
-    context.arc(x_izq+w_izq, y_izq+radio, radio, 0, circulo); // Dibujar el círculo en el primer brazo
-    context.arc(x_der+w_der, y_izq+radio, radio, 0, circulo); // Dibujar el círculo en el segundo brazo
-    context.closePath();
-    context.fill();
-}
+//     context.fillStyle = pelo_oscuro_color;
+//     context.beginPath();
+//     context.arc(x_izq+w_izq, y_izq+radio, radio, 0, circulo); // Dibujar el círculo en el primer brazo
+//     context.arc(x_der+w_der, y_izq+radio, radio, 0, circulo); // Dibujar el círculo en el segundo brazo
+//     context.closePath();
+//     context.fill();
+// }
 
-// Dibujar el cuerpo del ratón
-/**
- * 
- * @param {*} x 
- * @param {*} y 
- * @param {*} radio 
- */
-function cuerpo(x, y, radio) {
-    //cuerpo
-    context.strokeStyle = borde_color;
-    context.lineWidth = borde_size; // Ancho del borde
-    context.beginPath();
-    context.arc(x, y, radio, 0, circulo);
-    context.fillStyle = camisa_color;
-    context.fill();
-    context.stroke();
+// // Dibujar el cuerpo del ratón
+// /**
+//  * 
+//  * @param {*} x 
+//  * @param {*} y 
+//  * @param {*} radio 
+//  */
+// function cuerpo(x, y, radio) {
+//     //cuerpo
+//     context.strokeStyle = borde_color;
+//     context.lineWidth = borde_size; // Ancho del borde
+//     context.beginPath();
+//     context.arc(x, y, radio, 0, circulo);
+//     context.fillStyle = camisa_color;
+//     context.fill();
+//     context.stroke();
 
-    corbata(x-10, y-15);
-}
+//     corbata(x-10, y-15);
+// }
 
-//Dibujar la corbata del ratón
-/**
- * 
- * @param {*} x1 
- * @param {*} y1 
- */
-function corbata(x1, y1) {
-    var x2 = x1+20;
-    var y2 = y1;
+// //Dibujar la corbata del ratón
+// /**
+//  * 
+//  * @param {*} x1 
+//  * @param {*} y1 
+//  */
+// function corbata(x1, y1) {
+//     var x2 = x1+20;
+//     var y2 = y1;
 
-    var x3 = x2-5;
-    var y3 = y1+10;
+//     var x3 = x2-5;
+//     var y3 = y1+10;
     
-    var x4 = x1+5;
-    var y4 = y1+10;
+//     var x4 = x1+5;
+//     var y4 = y1+10;
 
-    //nudo
-    context.beginPath();
-    context.moveTo(x1, y1);
-    context.lineTo(x2, y2);
-    context.lineTo(x3, y3);
-    context.lineTo(x4, y4);    
-    context.closePath();
-    context.fillStyle = corbata_color; 
-    context.fill();
-    context.strokeStyle = borde_color;
-    context.lineWidth = 2; // Ancho de los segmentos
-    context.stroke();
+//     //nudo
+//     context.beginPath();
+//     context.moveTo(x1, y1);
+//     context.lineTo(x2, y2);
+//     context.lineTo(x3, y3);
+//     context.lineTo(x4, y4);    
+//     context.closePath();
+//     context.fillStyle = corbata_color; 
+//     context.fill();
+//     context.strokeStyle = borde_color;
+//     context.lineWidth = 2; // Ancho de los segmentos
+//     context.stroke();
 
-    //corbata
-    context.beginPath();
-    context.moveTo(x4, y4+1);
-    context.lineTo(x4, y4+50),
-    context.lineTo(x4+5, y4+60);
-    context.lineTo(x4+10, y4+50);
-    context.lineTo(x3, y4+1);
-    context.fillStyle = corbata_color;
-    context.fill();
-    context.stroke();
-}
+//     //corbata
+//     context.beginPath();
+//     context.moveTo(x4, y4+1);
+//     context.lineTo(x4, y4+50),
+//     context.lineTo(x4+5, y4+60);
+//     context.lineTo(x4+10, y4+50);
+//     context.lineTo(x3, y4+1);
+//     context.fillStyle = corbata_color;
+//     context.fill();
+//     context.stroke();
+// }
 
-// Dibujar la cabeza del ratón
-/**
- * 
- * @param {*} left_vertix_x 
- * @param {*} left_vertix_y 
- * @param {*} right_vertix_x 
- * @param {*} bottom_vertix_y 
- */
-function cabeza(left_vertix_x, left_vertix_y, right_vertix_x, bottom_vertix_y) {
-    var right_vertix_y = left_vertix_y;
+// // Dibujar la cabeza del ratón
+// /**
+//  * 
+//  * @param {*} left_vertix_x 
+//  * @param {*} left_vertix_y 
+//  * @param {*} right_vertix_x 
+//  * @param {*} bottom_vertix_y 
+//  */
+// function cabeza(left_vertix_x, left_vertix_y, right_vertix_x, bottom_vertix_y) {
+//     var right_vertix_y = left_vertix_y;
     
-    var bottom_vertix_x = (left_vertix_x+right_vertix_x)/2;
+//     var bottom_vertix_x = (left_vertix_x+right_vertix_x)/2;
 
-    //Cabeza
-    context.strokeStyle = borde_color;
-    context.lineWidth = borde_size; // Ancho del borde
-    context.beginPath();
-    context.moveTo(left_vertix_x, left_vertix_y);
-    context.lineTo(right_vertix_x, right_vertix_y);
-    context.lineTo(bottom_vertix_x, bottom_vertix_y);
-    context.closePath();
-    context.fillStyle = pelo_color;
-    context.fill();
-    context.stroke();
+//     //Cabeza
+//     context.strokeStyle = borde_color;
+//     context.lineWidth = borde_size; // Ancho del borde
+//     context.beginPath();
+//     context.moveTo(left_vertix_x, left_vertix_y);
+//     context.lineTo(right_vertix_x, right_vertix_y);
+//     context.lineTo(bottom_vertix_x, bottom_vertix_y);
+//     context.closePath();
+//     context.fillStyle = pelo_color;
+//     context.fill();
+//     context.stroke();
 
-    nariz(bottom_vertix_x, bottom_vertix_y);
+//     nariz(bottom_vertix_x, bottom_vertix_y);
 
-    ojos(right_vertix_x-left_vertix_x, left_vertix_x);
+//     ojos(right_vertix_x-left_vertix_x, left_vertix_x);
 
-    orejas(left_vertix_x, left_vertix_y, right_vertix_x);
-}
+//     orejas(left_vertix_x, left_vertix_y, right_vertix_x);
+// }
 
-//Dibujar la nariz del ratón
-/**
- * 
- * @param {*} x 
- * @param {*} y 
- */
-function nariz(x, y) {
-    var radio = 5;
+// //Dibujar la nariz del ratón
+// /**
+//  * 
+//  * @param {*} x 
+//  * @param {*} y 
+//  */
+// function nariz(x, y) {
+//     var radio = 5;
 
-    context.strokeStyle = borde_color;
-    context.lineWidth = borde_size; // Ancho del borde
-    context.beginPath();
-    context.arc(x, y, radio, 0, circulo);
-    context.fillStyle = pelo_oscuro_color;
-    context.fill();
-    context.stroke();
-}
+//     context.strokeStyle = borde_color;
+//     context.lineWidth = borde_size; // Ancho del borde
+//     context.beginPath();
+//     context.arc(x, y, radio, 0, circulo);
+//     context.fillStyle = pelo_oscuro_color;
+//     context.fill();
+//     context.stroke();
+// }
 
-//Dibujar los ojos del ratón
-/**
- * 
- * @param {*} distancia 
- * @param {*} origin 
- */
-function ojos(distancia, origin) {
-    var ojo_izq = origin + distancia/3;
-    var ojo_der = ojo_izq + distancia/3;
-    var altura_ojos = 85;
-    var radio_ojos = 8;
-    var radio_pupilas = 3;
+// //Dibujar los ojos del ratón
+// /**
+//  * 
+//  * @param {*} distancia 
+//  * @param {*} origin 
+//  */
+// function ojos(distancia, origin) {
+//     var ojo_izq = origin + distancia/3;
+//     var ojo_der = ojo_izq + distancia/3;
+//     var altura_ojos = 85;
+//     var radio_ojos = 8;
+//     var radio_pupilas = 3;
 
-    //ojos
-    context.strokeStyle = borde_color;
-    context.lineWidth = borde_size;
-    context.beginPath();
-    context.arc(ojo_izq, altura_ojos, radio_ojos, 0, circulo);
-    context.fillStyle = ojos_color;
-    context.fill();
-    context.stroke();
+//     //ojos
+//     context.strokeStyle = borde_color;
+//     context.lineWidth = borde_size;
+//     context.beginPath();
+//     context.arc(ojo_izq, altura_ojos, radio_ojos, 0, circulo);
+//     context.fillStyle = ojos_color;
+//     context.fill();
+//     context.stroke();
 
-    context.strokeStyle = borde_color;
-    context.lineWidth = borde_size;
-    context.beginPath();
-    context.arc(ojo_der, altura_ojos, radio_ojos, 0, circulo);
-    context.fillStyle = ojos_color;
-    context.fill();
-    context.stroke();
+//     context.strokeStyle = borde_color;
+//     context.lineWidth = borde_size;
+//     context.beginPath();
+//     context.arc(ojo_der, altura_ojos, radio_ojos, 0, circulo);
+//     context.fillStyle = ojos_color;
+//     context.fill();
+//     context.stroke();
 
-    //pupilas
-    context.beginPath();
-    context.arc(ojo_izq, altura_ojos, radio_pupilas, 0, circulo);
-    context.fillStyle = pupilas_color;
-    context.fill();
+//     //pupilas
+//     context.beginPath();
+//     context.arc(ojo_izq, altura_ojos, radio_pupilas, 0, circulo);
+//     context.fillStyle = pupilas_color;
+//     context.fill();
 
-    context.beginPath();
-    context.arc(ojo_der, altura_ojos, radio_pupilas, 0, circulo);
-    context.fillStyle = pupilas_color;
-    context.fill();
+//     context.beginPath();
+//     context.arc(ojo_der, altura_ojos, radio_pupilas, 0, circulo);
+//     context.fillStyle = pupilas_color;
+//     context.fill();
 
-    gafas(ojo_izq, ojo_der, radio_ojos, altura_ojos);
-}
+//     gafas(ojo_izq, ojo_der, radio_ojos, altura_ojos);
+// }
 
-//Dibujar las gafas del ratón
-/**
- * 
- * @param {*} x_izq 
- * @param {*} x_der 
- * @param {*} radio 
- * @param {*} altura 
- */
-function gafas(x_izq, x_der, radio, altura) {
-    var altura_gafas = altura+40;
-    context.lineWidth = 2; // Ancho del borde
-    context.beginPath();
-    context.arc(x_izq, altura_gafas, radio, 0, circulo);
-    context.fillStyle = gafas_color;
-    context.fill();
-    context.stroke();
+// //Dibujar las gafas del ratón
+// /**
+//  * 
+//  * @param {*} x_izq 
+//  * @param {*} x_der 
+//  * @param {*} radio 
+//  * @param {*} altura 
+//  */
+// function gafas(x_izq, x_der, radio, altura) {
+//     var altura_gafas = altura+40;
+//     context.lineWidth = 2; // Ancho del borde
+//     context.beginPath();
+//     context.arc(x_izq, altura_gafas, radio, 0, circulo);
+//     context.fillStyle = gafas_color;
+//     context.fill();
+//     context.stroke();
 
-    context.beginPath();
-    context.moveTo(x_izq+10, altura_gafas);
-    context.lineTo(x_izq+24, altura_gafas);
-    context.stroke();
+//     context.beginPath();
+//     context.moveTo(x_izq+10, altura_gafas);
+//     context.lineTo(x_izq+24, altura_gafas);
+//     context.stroke();
 
-    context.beginPath();
-    context.arc(x_der, altura_gafas, radio, 0, circulo);
-    context.fillStyle = gafas_color;
-    context.fill();
-    context.stroke();
-}
+//     context.beginPath();
+//     context.arc(x_der, altura_gafas, radio, 0, circulo);
+//     context.fillStyle = gafas_color;
+//     context.fill();
+//     context.stroke();
+// }
 
-// Dibujar las orejas del ratón
-/**
- * 
- * @param {*} x_izq 
- * @param {*} y 
- * @param {*} x_der 
- */
-function orejas(x_izq, y, x_der) {
-    var radio_oreja = 30;
-    var radio_interior = 15;
+// // Dibujar las orejas del ratón
+// /**
+//  * 
+//  * @param {*} x_izq 
+//  * @param {*} y 
+//  * @param {*} x_der 
+//  */
+// function orejas(x_izq, y, x_der) {
+//     var radio_oreja = 30;
+//     var radio_interior = 15;
 
-    context.strokeStyle = borde_color;
-    context.lineWidth = borde_size; // Ancho del borde
-    context.beginPath();
-    context.arc(x_izq, y, radio_oreja, 0, circulo);
-    context.fillStyle = pelo_color;
-    context.fill();
-    context.stroke();
+//     context.strokeStyle = borde_color;
+//     context.lineWidth = borde_size; // Ancho del borde
+//     context.beginPath();
+//     context.arc(x_izq, y, radio_oreja, 0, circulo);
+//     context.fillStyle = pelo_color;
+//     context.fill();
+//     context.stroke();
     
-    context.strokeStyle = borde_color;
-    context.lineWidth = borde_size; // Ancho del borde
-    context.beginPath();
-    context.arc(x_der, y, radio_oreja, 0, circulo);
-    context.fillStyle = pelo_color;
-    context.fill();
-    context.stroke();
+//     context.strokeStyle = borde_color;
+//     context.lineWidth = borde_size; // Ancho del borde
+//     context.beginPath();
+//     context.arc(x_der, y, radio_oreja, 0, circulo);
+//     context.fillStyle = pelo_color;
+//     context.fill();
+//     context.stroke();
 
-    context.strokeStyle = borde_color;
-    context.lineWidth = borde_size; // Ancho del borde
-    context.beginPath();
-    context.arc(x_izq, y, radio_interior, 0, circulo);
-    context.fillStyle = orejas_color;
-    context.fill();
-    context.stroke();
+//     context.strokeStyle = borde_color;
+//     context.lineWidth = borde_size; // Ancho del borde
+//     context.beginPath();
+//     context.arc(x_izq, y, radio_interior, 0, circulo);
+//     context.fillStyle = orejas_color;
+//     context.fill();
+//     context.stroke();
 
-    context.strokeStyle = borde_color;
-    context.lineWidth = borde_size; // Ancho del borde
-    context.beginPath();
-    context.arc(x_der, y, radio_interior, 0, circulo);
-    context.fillStyle = orejas_color;
-    context.fill();
-    context.stroke();
-}
+//     context.strokeStyle = borde_color;
+//     context.lineWidth = borde_size; // Ancho del borde
+//     context.beginPath();
+//     context.arc(x_der, y, radio_interior, 0, circulo);
+//     context.fillStyle = orejas_color;
+//     context.fill();
+//     context.stroke();
+// }
 
-// Dibujar los brazos del ratón
-/**
- * 
- * @param {*} x_izq 
- * @param {*} y_izq 
- * @param {*} separacion 
- * @param {*} w 
- * @param {*} h 
- */
-function brazos(x_izq, y_izq, x_der, y_der, w, h) {
-    var w_izq = w;
-    var h_izq = h;
-    var w_der = w_izq;
-    var h_der = h_izq;
+// // Dibujar los brazos del ratón
+// /**
+//  * 
+//  * @param {*} x_izq 
+//  * @param {*} y_izq 
+//  * @param {*} separacion 
+//  * @param {*} w 
+//  * @param {*} h 
+//  */
+// function brazos(x_izq, y_izq, x_der, y_der, w, h) {
+//     var w_izq = w;
+//     var h_izq = h;
+//     var w_der = w_izq;
+//     var h_der = h_izq;
 
-    var radio = 10;
+//     var radio = 10;
 
-    manos(x_izq+radio, x_der+radio, radio*circulo+y_izq+radio, radio);
+//     manos(x_izq+radio, x_der+radio, radio*circulo+y_izq+radio, radio);
 
-    context.strokeStyle = borde_color;
-    context.lineWidth = borde_size; // Ancho del borde
-    context.fillStyle = camisa_color;
-    context.beginPath(); // Comenzar el trazado de la forma
-    context.rect(x_izq, y_izq, w_izq, h_izq); // Dibujar el primer rectángulo
-    context.rect(x_der, y_der, w_der, h_der); // Dibujar el segundo rectángulo
-    context.closePath(); // Cerrar la forma
-    context.fill(); // Rellenar los brazos con el color
-    context.stroke(); // Dibujar el borde negro alrededor de los brazos
+//     context.strokeStyle = borde_color;
+//     context.lineWidth = borde_size; // Ancho del borde
+//     context.fillStyle = camisa_color;
+//     context.beginPath(); // Comenzar el trazado de la forma
+//     context.rect(x_izq, y_izq, w_izq, h_izq); // Dibujar el primer rectángulo
+//     context.rect(x_der, y_der, w_der, h_der); // Dibujar el segundo rectángulo
+//     context.closePath(); // Cerrar la forma
+//     context.fill(); // Rellenar los brazos con el color
+//     context.stroke(); // Dibujar el borde negro alrededor de los brazos
 
-    context.fillStyle = camisa_color;
-    context.beginPath(); // Comenzar el trazado de la forma
-    context.arc(x_izq+radio, y_izq, radio, 0, circulo); // Dibujar el círculo en el primer brazo
-    context.arc(x_der+radio, y_der, radio, 0, circulo); // Dibujar el círculo en el segundo brazo
-    context.closePath(); // Cerrar la forma
-    context.fill(); // Rellenar los círculos con el color
-}
+//     context.fillStyle = camisa_color;
+//     context.beginPath(); // Comenzar el trazado de la forma
+//     context.arc(x_izq+radio, y_izq, radio, 0, circulo); // Dibujar el círculo en el primer brazo
+//     context.arc(x_der+radio, y_der, radio, 0, circulo); // Dibujar el círculo en el segundo brazo
+//     context.closePath(); // Cerrar la forma
+//     context.fill(); // Rellenar los círculos con el color
+// }
 
-//Dibujar las manos del ratón
-/**
- * 
- * @param {*} x_izq 
- * @param {*} x_der 
- * @param {*} y 
- * @param {*} radio 
- */
-function manos(x_izq, x_der, y, radio) {
-    //manos del ratón
-    context.fillStyle = pelo_oscuro_color;
-    context.beginPath(); // Comenzar el trazado de la forma
-    context.arc(x_izq, y, radio, 0, circulo); // Dibujar el círculo en el primer brazo
-    context.arc(x_der, y, radio, 0, circulo); // Dibujar el círculo en el segundo brazo
-    context.closePath(); // Cerrar la forma
-    context.fill(); // Rellenar los círculos con el color
-}
+// //Dibujar las manos del ratón
+// /**
+//  * 
+//  * @param {*} x_izq 
+//  * @param {*} x_der 
+//  * @param {*} y 
+//  * @param {*} radio 
+//  */
+// function manos(x_izq, x_der, y, radio) {
+//     //manos del ratón
+//     context.fillStyle = pelo_oscuro_color;
+//     context.beginPath(); // Comenzar el trazado de la forma
+//     context.arc(x_izq, y, radio, 0, circulo); // Dibujar el círculo en el primer brazo
+//     context.arc(x_der, y, radio, 0, circulo); // Dibujar el círculo en el segundo brazo
+//     context.closePath(); // Cerrar la forma
+//     context.fill(); // Rellenar los círculos con el color
+// }
 
 
 function estado_inicial() {
-    piernas(150, 220, 20, 70, 230);
-    cuerpo(200, 175, 80);
-    cabeza(150, 50, 250, 150);
-    brazos(120, 150, 260, 150, 20, 70);
+    // piernas(150, 220, 20, 70, 230);
+    // cuerpo(200, 175, 80);
+    // cabeza(150, 50, 250, 150);
+    // brazos(120, 150, 260, 150, 20, 70);
+
+    const cabeza = new Cabeza(null, null, null, null, null, 100, 100, 100, 50, 50);
+    cabeza.mover(100, 100);
+    console.log(cabeza);
 }
