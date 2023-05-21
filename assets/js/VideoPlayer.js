@@ -17,6 +17,10 @@
     {
         id: "wlt1XV0-ksk",
         title: "16KB RAM Has Redstone Surpassed Rocket Science ?"
+    },
+    {
+        id: "gzthb6gqLDY",
+        title: "My final message goodbye"
     }
  ];
 
@@ -41,18 +45,18 @@
 
  // 4. The API will call this function when the video player is ready.
  function onPlayerReady(event) {
-
+   
  }
 
  // 5. The API calls this function when the player's state changes.
  //    The function indicates that when playing a video (state=1),
  //    the player should play for six seconds and then stop.
  var done = false;
- function onPlayerStateChange(event) {
-   if (event.data == YT.PlayerState.PLAYING && !done) {
-     setTimeout(stopVideo, 6000);
-     done = true;
-   }
+  function onPlayerStateChange(event) {
+    if(player.getPlayerState() == 0)
+    {
+        nextVideo();   
+    }
  }
  function stopVideo() {
    player.stopVideo();
@@ -126,13 +130,22 @@ function prevVideo(){
         }
     changeVideo(videos[index]);
 }
+function changeVideoWithID(video_id)
+{
+    videos.forEach(video => {
+        if(video.id == video_id)
+            {
+                changeVideo(video);
+            }
+    });  
+}
 function cargarVideos()
 {
     var lista = document.getElementById("lista-videos");
     lista.innerHTML = "";
     console.log("hola");
     videos.forEach(video => {
-        lista.innerHTML += "<div class='row lista_canciones' onclick=\" return changeVideo('" + video.id + "')\"> <div class='container-lista'><img src='https://img.youtube.com/vi/" + video.id +"/maxresdefault.jpg'"+  +" alt='"+video.title+"'/><div><h3>" + video.title + "</h3></div></div></div>";
+        lista.innerHTML += "<div class='row lista_canciones' onclick=\" return changeVideoWithID('" + video.id + "')\"> <div class='container-lista'><img src='https://img.youtube.com/vi/" + video.id +"/maxresdefault.jpg'"+  +" alt='"+video.title+"'/><div><h3>" + video.title + "</h3></div></div></div>";
     });
 }
 
