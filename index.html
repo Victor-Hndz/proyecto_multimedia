@@ -114,9 +114,11 @@
             <div id="player"></div>
             <script src = "assets/js/VideoPlayer.js"></script>
             <div id="video-buttons">
+                <button onclick="prevVideo()"><i class="bi bi-skip-start-fill icono"></i></button>
                 <button onclick="move10(false)"><img  src="assets/img/svg/retroceso-10seg.svg" alt="Atras 10 segundos" class="icono"/></button>
                 <button onclick="playPause()"><i  id="playPauseVideo" class="bi bi-pause-circle-fill icono"></i></button>
                 <button onclick="move10(true)"><img  src="assets/img/svg/avance-10seg.svg" alt="Adelante 10 segundos" class="icono"/></button>
+                <button onclick="nextVideo()"><i class="bi bi-skip-end-fill icono"></i></button>
 
                 
                 <div id="volume_vertical">
@@ -126,6 +128,9 @@
                         <div id="volumeDisplayVideo">100</div>
                     </div> 
                 </div>
+            </div>
+            <div id="lista-videos">
+                
             </div>
             
         </main>

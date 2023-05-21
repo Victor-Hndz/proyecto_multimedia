@@ -5,16 +5,32 @@
  var firstScriptTag = document.getElementsByTagName('script')[0];
  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
+ var videos = [
+    {
+        id: "yJK6uHsX-xU",
+        title: "Musikita pokemon",
+    },
+    {
+        id: "1ieGQ_YddX0",
+        title: "How dwarf fortress was made"
+    },
+    {
+        id: "wlt1XV0-ksk",
+        title: "16KB RAM Has Redstone Surpassed Rocket Science ?"
+    }
+ ];
+
  // 3. This function creates an <iframe> (and YouTube player)
  //    after the API code downloads.
  var player;
+ var currentVideo = 0;
  function onYouTubeIframeAPIReady() {
     //haz que este video no tenga videos relacionados al final 
     //https://www.youtube.com/watch?v=M7lc1UVf-VE&rel=0
    player = new YT.Player('player', {
      height: '360',
      width: '640',
-     videoId: 'M7lc1UVf-VE',
+     videoId: videos[0].id,
      playerVars: {controls: 0, modestbrading:  1, rel: 0, showinfo: 0, fs: 0, iv_load_policy: 3, disablekb: 1},
      events: {
        'onReady': onPlayerReady,
@@ -84,3 +100,40 @@ function mute()
             document.getElementById("volumeDisplayVideo").innerText = "0";
         }
 }
+
+function changeVideo(video)
+{
+    currentVideo = videos.indexOf(video);
+    player.loadVideoById(video.id);
+    player.playVideo();
+}
+
+function nextVideo(){
+    index = currentVideo + 1;
+    if(index >= videos.length)
+        {
+            index = 0;
+        }
+    console.log(index);
+    changeVideo(videos[index]);
+}
+
+function prevVideo(){
+    index = currentVideo - 1;
+    if(index < 0)
+        {
+            index = videos.length - 1;
+        }
+    changeVideo(videos[index]);
+}
+function cargarVideos()
+{
+    var lista = document.getElementById("lista-videos");
+    lista.innerHTML = "";
+    console.log("hola");
+    videos.forEach(video => {
+        lista.innerHTML += "<div class='row lista_canciones' onclick=\" return changeVideo('" + video.id + "')\"> <div class='container-lista'><img src='https://img.youtube.com/vi/" + video.id +"/maxresdefault.jpg'"+  +" alt='"+video.title+"'/><div><h3>" + video.title + "</h3></div></div></div>";
+    });
+}
+
+window.addEventListener("load", cargarVideos);
