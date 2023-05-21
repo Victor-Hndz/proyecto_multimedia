@@ -1,5 +1,6 @@
 const canvas = document.getElementById("ratonCanvas");
 const context = canvas.getContext("2d");
+const button_play = document.getElementById("play-pause");
 
 const pelo_color = "#db8239"; 
 const pelo_oscuro_color = "#ab5916";
@@ -15,25 +16,41 @@ const corbata_color = "red";
 const circulo = Math.PI * 2;
 const borde_size = 1;
 
+var raton;
+
+var clicked = false;
+
+var parar_mover_brazos = true;
+var parar_mover_cabeza = true;
+var parar_parpadeo = true;
+var salto_realizado = false;
+var saludando = false;
+
 //Ratón
 class Raton {
-    constructor(x, y, w, h) {
+    constructor(x, y, w, h, rotation) {
         this.x = x;
         this.y = y;
         this.w = w;
         this.h = h;
+        this.rotation = rotation;
         
-        this.cabeza = new Cabeza(this.x, this.y-h/8, this.w/3, this.h/3, this.h/3);
-        this.brazo_izq = new Brazo(this.x-this.h/5, this.y-this.y/7, 20, 70, camisa_color);
-        this.brazo_der = new Brazo(this.x+this.h/5, this.y-this.y/7, 20, 70, camisa_color);
-        this.cuerpo = new Circulo(this.x, this.y, this.w/2-this.h/4, camisa_color);
-        this.corbata = new Corbata(this.x, this.y-h/8, this.w/2-this.h/4, corbata_color);
-        this.gafas = new Gafas(this.x-15, this.y-h/5, this.x+15, this.y-h/5, 8, gafas_color);
-        this.pierna_izq = new Pierna(this.x-this.h/8, this.y+this.y/4, 20, 70, pantalon_color);
-        this.pierna_der = new Pierna(this.x+this.h/8, this.y+this.y/4, 20, 70, pantalon_color);
+        this.cabeza = new Cabeza(this.x, this.y-h/8, this.w/3, this.h/3, this.h/3, 0);
+        this.brazo_izq = new Brazo(this.x-this.h/5, this.y-this.y/7, 20, 70, camisa_color, 0);
+        this.brazo_der = new Brazo(this.x+this.h/5, this.y-this.y/7, 20, 70, camisa_color, 0);
+        this.cuerpo = new Circulo(this.x, this.y, this.w/2-this.h/4, camisa_color, 0);
+        this.corbata = new Corbata(this.x, this.y-h/8, this.w/2-this.h/4, h, corbata_color, 0);
+        this.gafas = new Gafas(this.x-15, this.y-h/5, this.x+15, this.y-h/5, 8, gafas_color, 0);
+        this.pierna_izq = new Pierna(this.x-this.h/8, this.y+this.y/4, 20, 70, pantalon_color, 0);
+        this.pierna_der = new Pierna(this.x+this.h/8, this.y+this.y/4, 20, 70, pantalon_color, 0);
     }
 
     dibujar() {
+        context.save();
+        context.translate(this.x, this.y); // Establecer el punto de origen
+        context.rotate((this.rotation * Math.PI) / 180); // Rotar el contexto en 30 grados (ajusta el ángulo según tus necesidades)
+        context.translate(-this.x, -this.y); // Restablecer el punto de origen
+
         this.pierna_izq.dibujar();
         this.pierna_der.dibujar();
         this.cuerpo.dibujar();
@@ -42,6 +59,8 @@ class Raton {
         this.brazo_izq.dibujar();
         this.brazo_der.dibujar();
         this.gafas.dibujar();
+
+        context.restore();
     }
 
     mover(x, y) {
@@ -77,28 +96,36 @@ class Raton {
 }
 
 class Cabeza {
-    constructor(x, y, w, h, color) {
+    constructor(x, y, w, h, color, rotation) {
         this.x = x;
         this.y = y;
         this.w = w;
         this.h = h;
         this.color = color;
+        this.rotation = rotation;
 
-        this.cabeza = new Triangulo(this.x, this.y, this.w, this.h, pelo_color);
-        this.ojo_izq = new Ojo(this.x-15, this.h, 8);
-        this.ojo_der = new Ojo(this.x+15, this.h, 8);
-        this.oreja_izq = new Oreja(this.x - (this.w / 2), this.y-this.h, 30);
-        this.oreja_der = new Oreja(this.x + (this.w / 2), this.y-this.h, 30);
-        this.nariz = new Circulo(this.x, this.y, 5, pelo_oscuro_color);
+        this.cabeza = new Triangulo(this.x, this.y, this.w, this.h, pelo_color, 0);
+        this.ojo_izq = new Ojo(this.x-15, this.h, 8, 0);
+        this.ojo_der = new Ojo(this.x+15, this.h, 8, 0);
+        this.oreja_izq = new Oreja(this.x - (this.w / 2), this.y-this.h, 30, 0);
+        this.oreja_der = new Oreja(this.x + (this.w / 2), this.y-this.h, 30, 0);
+        this.nariz = new Circulo(this.x, this.y, 5, pelo_oscuro_color, 0);
     }
 
     dibujar() {
+        context.save();
+        context.translate(this.x, this.y); // Establecer el punto de origen
+        context.rotate((this.rotation * Math.PI) / 180); // Rotar el contexto en 30 grados (ajusta el ángulo según tus necesidades)
+        context.translate(-this.x, -this.y); // Restablecer el punto de origen
+
         this.cabeza.dibujar();
         this.ojo_izq.dibujar();
         this.ojo_der.dibujar();
         this.oreja_izq.dibujar();
         this.oreja_der.dibujar();
         this.nariz.dibujar();
+
+        context.restore();
     }
 
     mover(x, y) {
@@ -124,19 +151,26 @@ class Cabeza {
 }
 
 class Ojo {
-    constructor(x, y, radio) {
+    constructor(x, y, radio, rotation) {
         this.x = x;
         this.y = y;
         this.radio = radio;
+        this.rotation = rotation;
 
-        this.iris = new Circulo(this.x, this.y, this.radio, ojos_color);
-        this.pupila = new Circulo(this.x, this.y, this.radio/2, pupilas_color);
+        this.iris = new Circulo(this.x, this.y, this.radio, ojos_color, 0);
+        this.pupila = new Circulo(this.x, this.y, this.radio/2, pupilas_color, 0);
     }
 
     dibujar() {
+        context.save();
+        context.translate(this.x, this.y); // Establecer el punto de origen
+        context.rotate((this.rotation * Math.PI) / 180); // Rotar el contexto en 30 grados (ajusta el ángulo según tus necesidades)
+        context.translate(-this.x, -this.y); // Restablecer el punto de origen
 
         this.iris.dibujar();
         this.pupila.dibujar();
+
+        context.restore();
     }
 
     mover(x, y) {
@@ -153,18 +187,26 @@ class Ojo {
 }
 
 class Oreja {
-    constructor(x, y, radio) {
+    constructor(x, y, radio, rotation) {
         this.x = x;
         this.y = y;
         this.radio = radio;
+        this.rotation = rotation;
 
-        this.exterior = new Circulo(this.x, this.y, this.radio, pelo_color);
-        this.interior = new Circulo(this.x, this.y, this.radio/2, orejas_color);
+        this.exterior = new Circulo(this.x, this.y, this.radio, pelo_color, 0);
+        this.interior = new Circulo(this.x, this.y, this.radio/2, orejas_color, 0);
     }
 
     dibujar() {
+        context.save();
+        context.translate(this.x, this.y); // Establecer el punto de origen
+        context.rotate((this.rotation * Math.PI) / 180); // Rotar el contexto en 30 grados (ajusta el ángulo según tus necesidades)
+        context.translate(-this.x, -this.y); // Restablecer el punto de origen
+
         this.exterior.dibujar();
         this.interior.dibujar();
+
+        context.restore();
     }
 
     mover(x, y) {
@@ -181,23 +223,31 @@ class Oreja {
 }
 
 class Gafas {
-    constructor(x1, y1, x2, y2, radio, color) {
+    constructor(x1, y1, x2, y2, radio, color, rotation) {
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
         this.y2 = y2;
         this.radio = radio;
         this.color = color;
+        this.rotation = rotation;
 
-        this.cristal_izq = new Circulo(this.x1, this.y1, this.radio, this.color);
-        this.cristal_der = new Circulo(this.x2, this.y2, this.radio, this.color);
-        this.puente = new Linea(this.x1+this.radio, this.y1, this.x2-this.radio, this.y2, 1, this.color);
+        this.cristal_izq = new Circulo(this.x1, this.y1, this.radio, this.color, 0);
+        this.cristal_der = new Circulo(this.x2, this.y2, this.radio, this.color, 0);
+        this.puente = new Linea(this.x1+this.radio, this.y1, this.x2-this.radio, this.y2, 1, this.color, 0);
     }
 
     dibujar() {
+        context.save();
+        context.translate(this.x, this.y); // Establecer el punto de origen
+        context.rotate((this.rotation * Math.PI) / 180); // Rotar el contexto en 30 grados (ajusta el ángulo según tus necesidades)
+        context.translate(-this.x, -this.y); // Restablecer el punto de origen
+
         this.cristal_izq.dibujar();
         this.cristal_der.dibujar();
         this.puente.dibujar();
+
+        context.restore();
     }
 
     mover(x, y) {
@@ -219,22 +269,30 @@ class Gafas {
 }
 
 class Brazo {
-    constructor(x, y, w, h, color) {
+    constructor(x, y, w, h, color, rotation) {
         this.x = x;
         this.y = y;
         this.w = w;
         this.h = h;
         this.color = color;
+        this.rotation = rotation;
 
-        this.hombro = new Circulo(this.x, this.y, w/2, this.color);
-        this.mano = new Circulo(this.x, this.y+this.h, w/2, pelo_oscuro_color);
-        this.brazo = new Rectangulo(this.x-w/2, this.y, this.w, this.h, this.color);
+        this.hombro = new Circulo(this.x, this.y, w/2, this.color, 0);
+        this.mano = new Circulo(this.x, this.y+this.h, w/2, pelo_oscuro_color, 0);
+        this.brazo = new Rectangulo(this.x-w/2, this.y, this.w, this.h, this.color, 0);
     }
 
     dibujar() {
+        context.save();
+        context.translate(this.x, this.y); // Establecer el punto de origen
+        context.rotate((this.rotation * Math.PI) / 180); // Rotar el contexto en 30 grados (ajusta el ángulo según tus necesidades)
+        context.translate(-this.x, -this.y); // Restablecer el punto de origen
+
         this.hombro.dibujar();
         this.mano.dibujar();
         this.brazo.dibujar();
+
+        context.restore();
     }
 
     mover(x, y) {
@@ -254,24 +312,32 @@ class Brazo {
 }
 
 class Pierna {
-    constructor(x, y, w, h, color) {
+    constructor(x, y, w, h, color, rotation) {
         this.x = x;
         this.y = y;
         this.w = w;
         this.h = h;
         this.color = color;
+        this.rotation = rotation;
 
-        this.cadera = new Circulo(this.x, this.y, w / 2, this.color);
-        this.puntera = new Circulo(this.x + this.w, this.y + this.h + w / 2, w / 2, pelo_oscuro_color);
-        this.pie = new Rectangulo(this.x - this.w / 2, this.y + this.h, this.h / 2, this.w, pelo_oscuro_color);
-        this.pierna = new Rectangulo(this.x - this.w / 2, this.y, this.w, this.h, this.color);
+        this.cadera = new Circulo(this.x, this.y, w / 2, this.color, 0);
+        this.puntera = new Circulo(this.x + this.w, this.y + this.h + w / 2, w / 2, pelo_oscuro_color, 0);
+        this.pie = new Rectangulo(this.x - this.w / 2, this.y + this.h, this.h / 2, this.w, pelo_oscuro_color, 0);
+        this.pierna = new Rectangulo(this.x - this.w / 2, this.y, this.w, this.h, this.color, 0);
     }
 
     dibujar() {
+        context.save();
+        context.translate(this.x, this.y); // Establecer el punto de origen
+        context.rotate((this.rotation * Math.PI) / 180); // Rotar el contexto en 30 grados (ajusta el ángulo según tus necesidades)
+        context.translate(-this.x, -this.y); // Restablecer el punto de origen
+
         this.cadera.dibujar();
         this.puntera.dibujar();
         this.pie.dibujar();
         this.pierna.dibujar();
+
+        context.restore();
     }
 
     mover(x, y) {
@@ -293,15 +359,21 @@ class Pierna {
 }
 
 class Corbata {
-    constructor(x, y, w, h, color) {
+    constructor(x, y, w, h, color, rotation) {
         this.x = x;
         this.y = y;
         this.w = w;
         this.h = h;
         this.color = color;
+        this.rotation = rotation;
     }
 
     dibujar() {
+        context.save();
+        context.translate(this.x, this.y); // Establecer el punto de origen
+        context.rotate((this.rotation * Math.PI) / 180); // Rotar el contexto en 30 grados (ajusta el ángulo según tus necesidades)
+        context.translate(-this.x, -this.y); // Restablecer el punto de origen
+
         //nudo
         context.beginPath();
         context.moveTo(this.x-20, this.y-10);
@@ -326,6 +398,8 @@ class Corbata {
         context.fillStyle = corbata_color;
         context.fill();
         context.stroke();
+
+        context.restore();
     }
 
     mover(x, y) {
@@ -345,21 +419,31 @@ class Corbata {
 }
 
 class Circulo {
-    constructor(x, y, radio, color) {
+    constructor(x, y, radio, color, rotation) {
         this.x = x;
         this.y = y;
         this.radio = radio;
         this.color = color;
+        this.rotation = rotation;
+
+        this.borde_color = borde_color;
     }
 
     dibujar() {
-        context.strokeStyle = borde_color;
+        context.save();
+        context.translate(this.x, this.y); // Establecer el punto de origen
+        context.rotate((this.rotation * Math.PI) / 180); // Rotar el contexto en 30 grados (ajusta el ángulo según tus necesidades)
+        context.translate(-this.x, -this.y); // Restablecer el punto de origen
+
+        context.strokeStyle = this.borde_color;
         context.lineWidth = borde_size;
         context.beginPath();
         context.arc(this.x, this.y, this.radio, 0, circulo);
         context.fillStyle = this.color;
         context.fill();
         context.stroke();
+
+        context.restore();
     }
 
     mover(x, y) {
@@ -374,15 +458,21 @@ class Circulo {
 }
 
 class Triangulo {
-    constructor(x, y, w, h, color) {
+    constructor(x, y, w, h, color, rotation) {
         this.x = x;
         this.y = y;
         this.w = w;
         this.h = h;
         this.color = color;
+        this.rotation = rotation;
     }
 
     dibujar() {
+        context.save();
+        context.translate(this.x, this.y); // Establecer el punto de origen
+        context.rotate((this.rotation * Math.PI) / 180); // Rotar el contexto en 30 grados (ajusta el ángulo según tus necesidades)
+        context.translate(-this.x, -this.y); // Restablecer el punto de origen
+
         context.strokeStyle = borde_color;
         context.lineWidth = borde_size; // Ancho del borde
         context.beginPath();
@@ -393,6 +483,8 @@ class Triangulo {
         context.fillStyle = pelo_color;
         context.fill();
         context.stroke();
+
+        context.restore();
     }
 
     mover(x, y) {
@@ -412,20 +504,28 @@ class Triangulo {
 }
 
 class Rectangulo {
-    constructor(x, y, w, h, color) {
+    constructor(x, y, w, h, color, rotation) {
         this.x = x;
         this.y = y;
         this.w = w;
         this.h = h;
         this.color = color;
+        this.rotation = rotation;
     }
 
     dibujar() {
+        context.save();
+        context.translate(this.x, this.y); // Establecer el punto de origen
+        context.rotate((this.rotation * Math.PI) / 180); // Rotar el contexto en 30 grados (ajusta el ángulo según tus necesidades)
+        context.translate(-this.x, -this.y); // Restablecer el punto de origen
+
         context.strokeStyle = borde_color;
         context.lineWidth = borde_size; // Ancho del borde
         context.fillStyle = this.color;
         context.fillRect(this.x, this.y, this.w, this.h);
         context.strokeRect(this.x, this.y, this.w, this.h);
+
+        context.restore();
     }
 
     mover(x, y) {
@@ -445,21 +545,29 @@ class Rectangulo {
 }
 
 class Linea {
-    constructor(x1, y1, x2, y2, grosor) {
+    constructor(x1, y1, x2, y2, grosor, rotation) {
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
         this.y2 = y2;
         this.grosor = grosor;
+        this.rotation = rotation;
     }
 
-    dibujar() {      
+    dibujar() {   
+        context.save();
+        context.translate(this.x, this.y); // Establecer el punto de origen
+        context.rotate((this.rotation * Math.PI) / 180); // Rotar el contexto en 30 grados (ajusta el ángulo según tus necesidades)
+        context.translate(-this.x, -this.y); // Restablecer el punto de origen
+
         context.strokeStyle = borde_color;
         context.lineWidth = this.grosor;
         context.beginPath();
         context.moveTo(this.x1, this.y1);
         context.lineTo(this.x2, this.y2);
         context.stroke();
+
+        context.restore();
     }
 
     mover(x, y) {
@@ -485,19 +593,226 @@ class Linea {
 
 document.addEventListener("onload", estado_inicial());
 
-function estado_inicial() {
-    const raton = new Raton(200, 200, 300, 300, 180);
-    raton.dibujar();
-    // const cara = new Cabeza(200, 200, 120, 130, pelo_color);
-    // cara.dibujar();
-    // var cont=0;
+button_play.addEventListener("click", function() {
+    if(saludando) return;
+    bailar(raton);
+    clicked = !clicked;
 
-    // var intervalo = setInterval(function() {
-    //     context.clearRect(0, 0, canvas.width, canvas.height);
-    //     cont++;
-    //     rotar(raton, 10*cont);
-    //     if (cont === 10) {
-    //         clearInterval(intervalo); // Utilizar el identificador del intervalo para detenerlo
-    //     }
-    // }, 100);
+    if(clicked) {
+        parar_mover_brazos = false;
+        parar_parpadeo = false;
+        parar_mover_cabeza = false;
+        salto_realizado = false;
+    } else {
+        parar_mover_brazos = true;
+        parar_parpadeo = true;
+        parar_mover_cabeza = true;
+        salto_realizado = true;
+    }
+});
+
+
+function estado_inicial() {
+    raton = new Raton(200, 200, 300, 300, 0); 
+    raton.dibujar();;
+    saludar();
 }
+
+
+function bailar() {
+    movimiento_brazos();
+    parpadear();
+    moverCabeza();
+}
+
+function saludar() {
+    var cont = 0;
+    var reps = 1;
+    var repetir = false;
+    saludando = true;
+
+    var intervalo = setInterval(function() {
+        cont++;
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        raton.brazo_der.rotation = -10 * cont;
+        raton.dibujar();
+
+        if(cont == 18) {
+            clearInterval(intervalo);
+            var intervalo2 = setInterval(function() {
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                raton.brazo_der.rotation = -10 * cont;
+                raton.dibujar();
+
+                if(raton.brazo_der.rotation == 0) {
+                    clearInterval(intervalo2);
+                    saludando = false;
+                    bailar(raton);
+                }
+
+                if(reps == 3) {
+                    cont--;
+                } else {
+                    if(repetir) {
+                        cont--;
+                    } else {
+                        cont++;
+                    }
+
+                    if(cont == 22) {
+                        repetir = true;
+                    }
+            
+                    if(cont == 16) {
+                        repetir = false;
+                        reps++;
+                    }
+                }
+            }, 60);
+        }
+    }, 60);
+}
+
+function movimiento_brazos() {
+  var cont = 0;
+  var derecha = true;
+
+  var intervalo = setInterval(function() {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    raton.brazo_der.rotation = -5 * cont;
+    raton.brazo_izq.rotation = -5 * cont;
+    raton.dibujar();
+
+    var aleatorio = Math.floor(Math.random() * 25) + 1;
+
+    if (raton.brazo_izq.rotation == -50) {
+      derecha = false;
+    }
+
+    if (raton.brazo_izq.rotation == 50) {
+      derecha = true;
+    }
+
+    if (derecha) {
+      cont++;
+    } else {
+      cont--;
+    }
+
+    if (parar_mover_brazos) {
+      clearInterval(intervalo);
+    }
+
+    // Realizar salto de forma aleatoria si aún no se ha realizado
+    if (!salto_realizado && aleatorio == 1) {
+        salto_realizado = true;
+        saltar(raton);
+    }
+  }, 50);
+}
+
+function saltar() {
+  var cont = 0;
+  var subiendo = true;
+  var preparado = true;
+  var parar = false;
+  var y_origen = raton.y;
+
+  var intervalo = setInterval(function() {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    if (preparado) {
+        raton.pierna_der.rotation = -5 * cont;
+        raton.pierna_izq.rotation = 5 * cont;
+    }
+
+    raton.dibujar();
+
+    if (raton.pierna_der.rotation == -45) {
+      preparado = false;
+    }
+
+    if (preparado && !parar) {
+      cont++;
+    }
+
+    if (!parar) {
+      if (!preparado && subiendo) {
+        raton.mover(0, -10);
+        raton.corbata.rotation += 3;
+      } else if (!preparado && !subiendo) {
+        raton.mover(0, 10);
+        raton.corbata.rotation -= 3;
+      }
+    } else {
+      cont--;
+      raton.pierna_der.rotation = -5 * cont;
+      raton.pierna_izq.rotation = 5 * cont;
+    }
+
+    if (raton.y == y_origen - 100) {
+      subiendo = false;
+    }
+
+    if (raton.y == y_origen && !subiendo) {
+      parar = true;
+    }
+
+    if (parar && cont < 0) {
+        raton.pierna_der.rotation = 0;
+        raton.pierna_izq.rotation = 0;
+        clearInterval(intervalo);
+    }
+  }, 80);
+}
+
+function parpadear() {
+    var intervalo = setInterval(function() {
+        var aleatorio = Math.random(); // Generar número aleatorio entre 0 y 1
+
+        if (aleatorio < 0.05) { // Probabilidad del 20% de parpadear
+            //raton.ojo_der.iris.color = pelo_color;
+            raton.cabeza.ojo_der.iris.color = pelo_color;
+            raton.cabeza.ojo_der.pupila.color = pelo_color;
+            raton.cabeza.ojo_der.pupila.borde_color = pelo_color;
+            raton.cabeza.ojo_izq.iris.color = pelo_color;
+            raton.cabeza.ojo_izq.pupila.color = pelo_color;
+            raton.cabeza.ojo_izq.pupila.borde_color = pelo_color;
+
+        } else {
+            //raton.ojo_der.iris.color = ojos_color;
+            raton.cabeza.ojo_der.iris.color = ojos_color;
+            raton.cabeza.ojo_der.pupila.color = pupilas_color;
+            raton.cabeza.ojo_der.pupila.borde_color = borde_color;
+            raton.cabeza.ojo_izq.iris.color = ojos_color;
+            raton.cabeza.ojo_izq.pupila.color = pupilas_color;
+            raton.cabeza.ojo_izq.pupila.borde_color = borde_color;
+        }
+
+        raton.dibujar();
+
+        if (parar_parpadeo) {
+            clearInterval(intervalo);
+        }
+    }, 200);
+}
+
+function moverCabeza() {
+    var intervalo = setInterval(function() {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+      var aleatorio = Math.random(); // Generar número aleatorio entre 0 y 1
+  
+      if (aleatorio < 0.1) { // Probabilidad del 50% de mover la cabeza
+        var angulo = Math.floor(Math.random() * 10) - 5; // Ángulo aleatorio entre -5 y 5
+        raton.cabeza.rotation = angulo; // Mover la cabeza del ratón al ángulo aleatorio
+      }
+  
+      raton.dibujar();
+  
+      if (parar_mover_cabeza) {
+        clearInterval(intervalo);
+      }
+    }, 200); // Intervalo de tiempo de 200 ms (movimiento cada 0.2 segundos)
+  }
+  
+  
