@@ -1,6 +1,6 @@
 const canvas = document.getElementById("ratonCanvas");
 const context = canvas.getContext("2d");
-const button_play = document.getElementById("play-pause");
+const audio_check = document.getElementById('audio');
 
 const pelo_color = "#db8239"; 
 const pelo_oscuro_color = "#ab5916";
@@ -593,24 +593,26 @@ class Linea {
 
 document.addEventListener("onload", estado_inicial());
 
-button_play.addEventListener("click", function() {
-    if(saludando) return;
+audio_check.addEventListener("play", function() {
+    if(saludando) {return;}
     bailar(raton);
-    clicked = !clicked;
 
-    if(clicked) {
-        parar_mover_brazos = false;
-        parar_parpadeo = false;
-        parar_mover_cabeza = false;
-        salto_realizado = false;
-    } else {
-        parar_mover_brazos = true;
-        parar_parpadeo = true;
-        parar_mover_cabeza = true;
-        salto_realizado = true;
-    }
+    parar_mover_brazos = false;
+    parar_parpadeo = false;
+    parar_mover_cabeza = false;
+    salto_realizado = false;    
 });
 
+audio_check.addEventListener("pause", function() {
+    if(saludando) {return;}
+    bailar(raton);
+
+    parar_mover_brazos = true;
+    parar_parpadeo = true;
+    parar_mover_cabeza = true;
+    salto_realizado = true;
+    
+});
 
 function estado_inicial() {
     raton = new Raton(200, 200, 300, 300, 0); 

@@ -31,6 +31,7 @@
 
 #volume{
     margin-bottom: 15px;
+    cursor: pointer;
 }
 
 #volumeDisplay{
@@ -47,10 +48,12 @@
 
 #progress #skip-backward{
     margin-right: 20px;
+    cursor: pointer;
 }
 
 #progress #skip-forward{
     margin-left: 20px;
+    cursor: pointer;
 }
 
 #progress-bar-container{
@@ -63,6 +66,7 @@
 
 #progress-bar{
     width: 100%;
+    cursor: pointer;
 }
 
 #inferior{
@@ -70,6 +74,22 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+}
+
+#shuffle {
+  cursor: pointer;
+}
+
+#previous {
+  cursor: pointer;
+}
+
+#next {
+  cursor: pointer;
+}
+
+#repeat {
+  cursor: pointer;
 }
 
 button{
@@ -93,6 +113,7 @@ button{
 
 .range__slider {
   width: 100%;
+  cursor: pointer;
 }
 
 .range__value {

@@ -96,6 +96,7 @@ input[type="range"] {
     margin: 30px 2.5% 20px 2.5%;
     float: left;
     outline: none;
+    
 }
 input[type="range"]::-webkit-slider-runnable-track {
     width: 100%;

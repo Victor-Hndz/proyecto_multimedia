@@ -5,8 +5,13 @@
 
 #volumeVideo{
     margin-bottom: 15px;
+    cursor: pointer;
 }
 
 #volumeDisplayVideo{
     text-align: center;
+}
+
+#progress-bar-Video {
+    cursor: pointer;
 }
