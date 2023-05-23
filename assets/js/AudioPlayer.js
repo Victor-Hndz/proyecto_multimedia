@@ -24,40 +24,51 @@ let isShuffle = false;
 // Establecer información de las pistas
 var tracks = [
     {
-        title: 'Sunwave snippet',
-        autor: 'Independent Music Licensing Collective (IMLC)',
+        title: 'Beer-Blues',
+        autor: 'Koi-discovery',
         src: {
             mp3: 'assets/audio/pista1.mp3',
             ogg: 'assets/audio/pista1.ogg'
         },
-        license: 'Creative Commons Attribution 4.0 International License',
+        license: 'CC0 1.0 Universal License',
         portada: 'assets/img/pista1.jpg',
-        duration: '00:33',
-        url: 'https://freemusicarchive.org/music/independent-music-licensing-collective-imlc/jonas-hipper-snippets/sunwave-snippet/'
+        duration: '05:21',
     },
 
     {
-        title: 'Our Values',
-        autor: 'Independent Music Licensing Collective (IMLC)',
+        title: 'Isla de Java',
+        autor: 'Zaire',
         src: {
             mp3: 'assets/audio/pista2.mp3',
             ogg: 'assets/audio/pista2.ogg'
         },
-        license: 'Creative Commons Attribution 4.0 International License',
+        license: 'CC0 1.0 Universal License',
         portada: 'assets/img/pista2.jpg',
-        duration: '02:30'
+        duration: '03:04'
     },
 
     {
-        title: 'Fall and Rise',
-        autor: 'Independent Music Licensing Collective (IMLC)',
+        title: 'Beach Babes',
+        autor: 'SUPERARE',
         src: {
             mp3: 'assets/audio/pista3.mp3',
             ogg: 'assets/audio/pista3.ogg'
         },
-        license: 'Creative Commons Attribution 4.0 International License',
+        license: 'CC0 1.0 Universal License',
         portada: 'assets/img/pista3.jpg',
-        duration: '03:28'
+        duration: '01:48'
+    },
+
+    {
+        title: 'Hooptie With The Windows Down ',
+        autor: 'HoliznaCC0',
+        src: {
+            mp3: 'assets/audio/pista4.mp3',
+            ogg: 'assets/audio/pista4.ogg'
+        },
+        license: 'CC0 1.0 Universal License',
+        portada: 'assets/img/pista4.jpg',
+        duration: '03:54'
     }
 ];
 
@@ -136,7 +147,7 @@ function togglePlayPause() {
     }
 }
 
-// Función para ajustar el volumenz
+// Función para ajustar el volumen
 function adjustVolume(change) {
     const newVolume = audio.volume + change;
     if (newVolume < 0) {

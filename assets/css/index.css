@@ -45,6 +45,14 @@
     justify-content: space-between;
 }
 
+#progress #skip-backward{
+    margin-right: 20px;
+}
+
+#progress #skip-forward{
+    margin-left: 20px;
+}
+
 #progress-bar-container{
     display: flex;
     flex-direction: row;
@@ -494,3 +502,42 @@ input[type=range].styled-slider2 {
     justify-content: center;
     align-items: center;
   }
+
+.align-items-center{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+#rana_Statica{
+  margin-bottom: 3em;
+}
+
+#juego{
+  background-color: rgb(63, 213, 255); 
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.center-video{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.center-video #player{
+  width: 100%;
+  height: 100%;
+}
+
+#progressVideo{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
+  justify-content: center;
+}
