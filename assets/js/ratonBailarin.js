@@ -594,18 +594,19 @@ class Linea {
 document.addEventListener("onload", estado_inicial());
 
 audio_check.addEventListener("play", function() {
-    if(saludando) {return;}
-    bailar(raton);
+    if(saludando) {return;};
 
-    parar_mover_brazos = false;
-    parar_parpadeo = false;
-    parar_mover_cabeza = false;
-    salto_realizado = false;    
+    if(parar_mover_brazos) {
+        bailar(raton);
+        parar_mover_brazos = false;
+        parar_parpadeo = false;
+        parar_mover_cabeza = false;
+        salto_realizado = false; 
+    }   
 });
 
 audio_check.addEventListener("pause", function() {
     if(saludando) {return;}
-    bailar(raton);
 
     parar_mover_brazos = true;
     parar_parpadeo = true;
