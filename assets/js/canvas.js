@@ -114,6 +114,7 @@ var myGame = {
         this.artifacts.push(new Artifact(0,100, 100, 25, 25));
         this.artifacts.push(new Artifact(1, 200, 200, 25, 25));
         this.artifacts.push(new Artifact(2, 400, 400, 25, 25));
+        this.artifacts.push(new Artifact(3, 500, 500, 25, 25));
     },
     clear: function () {
         this.context.clearRect(0, 0, this.canvas.clientWidth, this.canvas.clientHeight);
