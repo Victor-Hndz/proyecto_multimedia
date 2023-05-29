@@ -17,8 +17,8 @@ volumeControlVideo.addEventListener('input', function () {
 //lista json de toods los videos
 var videos = [
     {
-        id: "yJK6uHsX-xU",
-        title: "Musikita pokemon",
+        id: "Iqes7ILJbiY",
+        title: "Estoy entre una niña y el hachís",
     },
     {
         id: "1ieGQ_YddX0",
