@@ -1,3 +1,26 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Bureau Grotesk', 'Roboto', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6{
+  font-family: 'PlayfairDisplay-ExtraBold', 'Times New Roman', serif;
+}
+
+body{
+  background-color: #fceeff;
+}
+
+.titulo{
+  font-family: 'PlayfairDisplay-ExtraBold', 'Times New Roman', serif;
+  font-size: 2.5em;
+  color: #00027e;
+  text-align: center;
+  margin: 20px 0;
+}
+
 header {
   background-image: url(../img/fondo_header.png);
   background-repeat: no-repeat;
@@ -154,6 +177,8 @@ input[type=range].styled-slider {
     height: 2.2em;
     appearance: none;
     -webkit-appearance: none;
+    background-color: #fceeff;
+
   }
   
   /*progress support*/
@@ -183,7 +208,7 @@ input[type=range].styled-slider {
     height: 1em;
     border: none;
     border-radius: 0.5em;
-    background: #efefef;
+    background: #acacac;
     box-shadow: none;
   }
   
@@ -491,13 +516,17 @@ input[type=range].styled-slider2 {
 
   .lista_canciones{
     margin: 10px 0;
+    
   }
 
   .lista_canciones .container-lista{
     display: flex;
+    padding: 6px;
     align-items: center;
     flex-direction: row;
-    background-color: #fff;
+    background-color: #e9bae9;
+    border-radius: 10px;
+    border: 3px solid #00027e;
   }
 
   .lista_canciones img{
