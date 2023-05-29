@@ -14,7 +14,7 @@ volumeControlVideo.addEventListener('input', function () {
     volumeDisplayVideo.innerHTML = volumeControlVideo.value * 100;
 }, false);
 
-
+//lista json de toods los videos
 var videos = [
     {
         id: "yJK6uHsX-xU",
@@ -38,7 +38,7 @@ var videos = [
 //    after the API code downloads.
 var player;
 var currentVideo = 0;
-function onYouTubeIframeAPIReady() {
+function onYouTubeIframeAPIReady() {//funcion que se ejecuta cuando se carga el iframe
     //haz que este video no tenga videos relacionados al final 
     //https://www.youtube.com/watch?v=M7lc1UVf-VE&rel=0
     player = new YT.Player('player', {
@@ -54,7 +54,7 @@ function onYouTubeIframeAPIReady() {
 }
 
 // 4. The API will call this function when the video player is ready.
-function onPlayerReady(event) {
+function onPlayerReady(event) {// funcion que se ejecuta cuando el video esta vaciado
     // Update the controls on load
     updateTimerDisplay();
     updateProgressBar();
@@ -75,16 +75,17 @@ function onPlayerReady(event) {
 // 5. The API calls this function when the player's state changes.
 //    The function indicates that when playing a video (state=1),
 //    the player should play for six seconds and then stop.
-var done = false;
+//cuando se acaba el video pasamos al siguiente
 function onPlayerStateChange(event) {
     if (player.getPlayerState() == 0) {
         nextVideo();
     }
 }
+//paramos el video
 function stopVideo() {
     player.stopVideo();
 }
-
+//funcion de play pause
 function playPause() {
     if (player.getPlayerState() == 1) {
         player.pauseVideo();
@@ -96,7 +97,7 @@ function playPause() {
     }
 
 }
-
+//funcion para pasar 10 segundos
 function move10(direction) {
     var time = player.getCurrentTime();
     if (direction) {
@@ -106,7 +107,7 @@ function move10(direction) {
         player.seekTo(time - 10);
     }
 }
-
+//funcion para hacer mute
 function mute() {
     if (player.isMuted()) {
         player.unMute();
@@ -119,7 +120,7 @@ function mute() {
         volumeDisplayVideo.innerText = "0";
     }
 }
-
+//funcion para cambiar el video
 function changeVideo(video) {
     barra.value = 0;
     barra.style.setProperty('--value', barra.value);
@@ -127,7 +128,7 @@ function changeVideo(video) {
     player.loadVideoById(video.id);
     player.playVideo();
 }
-
+//funcion para pasar al siguiente video
 function nextVideo() {
     index = currentVideo + 1;
     if (index >= videos.length) {
@@ -136,7 +137,7 @@ function nextVideo() {
     console.log(index);
     changeVideo(videos[index]);
 }
-
+//funcion para pasar al video anterior
 function prevVideo() {
     index = currentVideo - 1;
     if (index < 0) {
@@ -144,6 +145,7 @@ function prevVideo() {
     }
     changeVideo(videos[index]);
 }
+//funcion para cambiar el video usando la id
 function changeVideoWithID(video_id) {
     videos.forEach(video => {
         if (video.id == video_id) {
@@ -151,6 +153,7 @@ function changeVideoWithID(video_id) {
         }
     });
 }
+//funcion para cargar los videos en la pagina
 function cargarVideos() {
     var lista = document.getElementById("lista-videos");
     lista.innerHTML = "";
@@ -159,13 +162,13 @@ function cargarVideos() {
         lista.innerHTML += "<div class='row lista_canciones' onclick=\" return changeVideoWithID('" + video.id + "')\"> <div class='container-lista'><img src='https://img.youtube.com/vi/" + video.id + "/maxresdefault.jpg'" + +" alt='" + video.title + "'/><div><h3>" + video.title + "</h3></div></div></div>";
     });
 }
-
+//funcion para actualizar el segundero
 function updateTimerDisplay() {
     // Update current time text display.
     document.getElementById("timeVideo").innerText = formatTime(player.getCurrentTime());
     document.getElementById("durationVideo").innerText = formatTime(player.getDuration());
 }
-
+//funcion para formatear el tiempo
 function formatTime(time) {
     time = Math.round(time);
 
