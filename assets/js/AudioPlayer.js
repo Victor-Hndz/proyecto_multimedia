@@ -21,7 +21,7 @@ const progressVar = document.querySelectorAll('input[type="range"].slider-progre
 let mouseDownOnSlider = false;
 let isShuffle = false;
 
-// Establecer información de las pistas
+// Establecer información de las pistas de audio
 var tracks = [
     {
         title: 'Beer-Blues',
@@ -72,6 +72,7 @@ var tracks = [
     }
 ];
 
+// Pista oculta de Rick Astley
 const hiddenTrack = [
     {
         title: 'Rickroll',
@@ -86,6 +87,7 @@ const hiddenTrack = [
     }
 ];
 
+//Control de volumen
 volumeControl.addEventListener('input', () => {
     audio.volume = volumeControl.value;
     volumeDisplay.textContent = `${Math.floor(audio.volume * 100)}`;
@@ -95,6 +97,7 @@ audio.addEventListener("loadeddata", () => {
     progressEl.value = 0;
 });
 
+// Actualizar el tiempo de la pista en la barra 
 audio.addEventListener("timeupdate", () => {
     if (!mouseDownOnSlider) {
         progressEl.value = audio.currentTime / audio.duration * 100;
@@ -106,6 +109,7 @@ progressEl.addEventListener("change", () => {
     const pct = progressEl.value / 100;
     audio.currentTime = (audio.duration || 0) * pct;
 });
+
 progressEl.addEventListener("mousedown", () => {
     mouseDownOnSlider = true;
 });
@@ -211,6 +215,7 @@ function changeTrack() {
     selectTrack(currentTrackIndex);
 }
 
+// Función para seleccionar una pista
 function selectTrack(index) {
     audio.src = tracks[index].src.mp3;
     titleElement.textContent = tracks[index].title;
@@ -220,6 +225,7 @@ function selectTrack(index) {
     playPauseButton.innerHTML = '<i id="play-pause" class="bi bi-pause-circle-fill icono"></i>';
 }
 
+// Función para pasar a la siguiente pista
 function nextTrack() {
     if (!audio.loop) {
         if (!isShuffle) {
@@ -236,6 +242,7 @@ function nextTrack() {
     }
 }
 
+// Función para pasar a la pista anterior
 function previousTrack() {
     if (audio.currentTime > 3) {
         audio.currentTime = 0;
@@ -254,6 +261,7 @@ function previousTrack() {
     }
 }
 
+// Función para actualizar el tiempo de la pista
 function cargarCanciones() {
     var lista = document.getElementById("listaCanciones");
     lista.innerHTML = "";
@@ -276,6 +284,7 @@ next.addEventListener('click', nextTrack);
 previous.addEventListener('click', previousTrack);
 window.addEventListener("load", cargarCanciones);
 
+// Función para actualizar el tiempo de la pista y la barra de progreso
 for (let e of document.querySelectorAll('input[type="range"].slider-progress')) {
     e.style.setProperty('--value', e.value);
     e.style.setProperty('--min', e.min == '' ? '0' : e.min);
