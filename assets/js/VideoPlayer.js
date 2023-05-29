@@ -17,19 +17,19 @@ volumeControlVideo.addEventListener('input', function () {
 //lista json de toods los videos
 var videos = [
     {
-        id: "Iqes7ILJbiY",
+        id: "Iqes7ILJbiY",//https://www.youtube.com/watch?v=Iqes7ILJbiY
         title: "Estoy entre una niña y el hachís",
     },
     {
-        id: "1ieGQ_YddX0",
+        id: "1ieGQ_YddX0",//https://www.youtube.com/watch?v=1ieGQ_YddX0&t=1s
         title: "How dwarf fortress was made"
     },
     {
-        id: "wlt1XV0-ksk",
+        id: "wlt1XV0-ksk",//https://www.youtube.com/watch?v=wlt1XV0-ksk&t=1s
         title: "16KB RAM Has Redstone Surpassed Rocket Science ?"
     },
     {
-        id: "gzthb6gqLDY",
+        id: "gzthb6gqLDY",//https://www.youtube.com/watch?v=gzthb6gqLDY&t=1s
         title: "My final message goodbye"
     }
 ];
